@@ -1,0 +1,21 @@
+{
+    "name": "sfelix-martins/json-exception-handler",
+    "description": "Add more power to Laravel Exceptions Handler to treat json responses",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Samuel Martins",
+            "email": "sfelix_martins@hotmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "classmap": [
+            "database"
+        ],
+        "psr-4": {
+            "SMartins\\JsonHandler": "src/"
+        }
+    }
+}
