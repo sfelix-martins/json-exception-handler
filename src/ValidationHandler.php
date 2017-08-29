@@ -3,17 +3,19 @@
 namespace SMartins\JsonHandler;
 
 use Illuminate\Validation\ValidationException;
+use SMartins\JsonHandler\Responses\Response;
 
 trait ValidationHandler
 {
     public function validationException(ValidationException $exception)
     {
-        return [
-            'message' => 'The given data failed to pass validation.',
-            'code' => 123,
-            'errors' => $this->formattedErrors($exception),
-            'httpCode' => 422
-        ];
+        $response = new Response;
+        $response->setMessage('The given data failed to pass validation.');
+        $response->setCode(122);
+        $response->setErrors($this->formattedErrors($exception));
+        $response->setHttpCode(422);
+
+        return $this->response = $response;
     }
 
     public function formattedErrors(ValidationException $exception)
@@ -25,7 +27,7 @@ trait ValidationHandler
     {
         $messages = [];
         // ValidationException from \Illuminate\Foundation\Validation\ValidationRequests trait
-        // use on Controller return a Illuminate\Http\JsonResponse
+        // used on Controller return a Illuminate\Http\JsonResponse
         if ($exception->response) {
             $messages = $this->getMessagesFromJsonResponse($exception);
         } else {

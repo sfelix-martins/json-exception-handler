@@ -3,32 +3,44 @@
 namespace SMartins\JsonHandler;
 
 use Exception;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use SMartins\JsonHandler\Responses\Response;
 
 trait JsonHandler
 {
-    use ValidationHandler;
+    use ValidationHandler, ModelNotFoundHandler;
 
-    public function defaultResponse(Exception $exception)
+    public $response;
+
+    public function setDefaultResponse(Exception $exception)
     {
-        return [
-            'code' => 1,
-            'message' => class_basename($exception),
-            'description' => $exception->getMessage().
-                ' line '. $exception->getLine().
-                ' in '. basename($exception->getFile()),
-            'httpCode' => 500
-        ];
+        $description = $exception->getMessage().
+            ' line '. $exception->getLine().
+            ' in '. basename($exception->getFile());
+
+        $response = new Response;
+        $response->setMessage(class_basename($exception));
+        $response->setCode(1);
+        $response->setDescription($description);
+        $response->setHttpCode(500);
+
+        return $this->response = $response;
     }
 
-    public function jsonResponse(array $data)
+    public function jsonResponse(Exception $exception)
     {
-        $response = ['code' => $data['code'], 'message' => $data['message']];
-        if (isset($data['errors'])) {
-            $response['errors'] = $data['errors'];
-        } elseif (isset($data['description'])) {
-            $response['description'] = $data['description'];
+        $this->setDefaultResponse($exception);
+
+        if ($exception instanceOf ValidationException) {
+            $this->validationException($exception);
+        } elseif ($exception instanceOf ModelNotFoundException) {
+            $this->modelNotFoundException($exception);
         }
 
-        return response()->json($response, $data['httpCode']);
+        return response()->json(
+            $this->response->toArray(), 
+            $this->response->getHttpCode()
+        );
     }
 }

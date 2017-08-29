@@ -40,11 +40,10 @@ To `Illuminate\Validation\ValidationException`:
 }
 ```
 
-### Available methods
+### Treated Exceptions
 
-- defaultResponse($exception): Return the default error response
-- validationException($exception): Return the validation error response
-- jsonResponse($response): Return the json response
+- Illuminate\Validation\ValidationException;
+- Illuminate\Database\Eloquent\ModelNotFoundException;
 
 ## Using
 
@@ -54,7 +53,8 @@ Install the package
 $ composer require sfelix-martins/json-exception-handler
 ```
 
-Use the trait on your `App\Exception\Handler`
+Use the trait on your `App\Exception\Handler` and add method `jsonResponse()` 
+passing the `$exception` if `$request` expects a json response on `render()`method
 
 ```php
 
@@ -65,28 +65,43 @@ class Handler extends ExceptionHandler
     use JsonHandler;
 
     ...
-```
 
-### Example
-
-In your render method you can check if the request expects json and place the following code:
-
-```php
     public function render($request, Exception $exception)
-    {
+    {   
         if ($request->expectsJson()) {
-            // Get default response
-            $response = $this->defaultResponse($exception);
-
-            if ($exception instanceOf ValidationException) {
-                // Get validation exception response
-                $response = $this->validationException($exception);
-            }
-    
-            //
-            return $this->jsonResponse($response);
+            return $this->jsonResponse($exception);
         }
 
         return parent::render($request, $exception);
     }
+    
+    ...
+```
+
+### Use sample
+
+```php
+
+use App\User;
+use Validator;
+
+class UserController extends Controller
+{
+    ...
+
+    public function store(Request $request)
+    {
+        // If validate fails
+        $this->validate($request, $this->rules);
+
+        //or
+        Validator::make($request->all(), $this->rules)->validate();
+    }
+
+    public function show($id)
+    {
+        // If not found the default response is called
+        $user = User::findOrFail($id);
+    }
+
 ```
