@@ -125,6 +125,10 @@ class UserController extends Controller
     {
         // If not found the default response is called
         $user = User::findOrFail($id);
+        
+        // Gate define on AuthServiceProvider
+        // Generate an AuthorizationException if fail
+        $this->authorize('users.view', $user->id);
     }
 
 ```
