@@ -1,7 +1,7 @@
 # Laravel Json Exception Handler
 
-Add methods to your `App\Exceptions\Handler` to treat json responses.
-It is most useful if you is building APIs!
+Adds methods to your `App\Exceptions\Handler` to treat json responses.
+It is most useful if you are building APIs!
 
 ## Features
 
@@ -42,16 +42,39 @@ To `Illuminate\Validation\ValidationException`:
 
 ### Treated Exceptions
 
-- Illuminate\Validation\ValidationException;
-- Illuminate\Database\Eloquent\ModelNotFoundException;
+- `Illuminate\Validation\ValidationException`
+- `Illuminate\Database\Eloquent\ModelNotFoundException`
+- `Illuminate\Auth\Access\AuthorizationException`
 
-## Using
+## Installing and configuring
 
 Install the package 
 
 ```console
 $ composer require sfelix-martins/json-exception-handler
 ```
+
+Add the `JsonHandlerServiceProvider` to your `config/app.php` providers array:
+
+```php
+    'providers' => [
+        ...
+        SMartins\JsonHandler\JsonHandlerServiceProvider::class,
+    ],
+```
+
+Publish the config to set your own exception codes
+
+```sh
+
+$ php artisan vendor:publish --provider="SMartins\JsonHandler\JsonHandlerServiceProvider"
+```
+
+Set your exception codes on `config/json-exception-handler.php` on codes array.
+
+You can add more fields and codes to `validation_fields` array.
+
+## Using
 
 Use the trait on your `App\Exception\Handler` and add method `jsonResponse()` 
 passing the `$exception` if `$request` expects a json response on `render()`method
@@ -105,3 +128,7 @@ class UserController extends Controller
     }
 
 ```
+
+## Response References:
+
+- http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api

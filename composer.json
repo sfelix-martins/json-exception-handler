@@ -1,6 +1,6 @@
 {
     "name": "sfelix-martins/json-exception-handler",
-    "description": "Add more power to Laravel Exceptions Handler to treat json responses",
+    "description": "Adds more power to Laravel Exceptions Handler to treat json responses",
     "type": "library",
     "keywords": ["laravel", "exceptions", "handler", "json", "api"],
     "license": "MIT",

@@ -5,11 +5,12 @@ namespace SMartins\JsonHandler;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Auth\Access\AuthorizationException;
 use SMartins\JsonHandler\Responses\Response;
 
 trait JsonHandler
 {
-    use ValidationHandler, ModelNotFoundHandler;
+    use ValidationHandler, ModelNotFoundHandler, AuthorizationHandler;
 
     public $response;
 
@@ -21,9 +22,9 @@ trait JsonHandler
 
         $response = new Response;
         $response->setMessage(class_basename($exception));
-        $response->setCode(1);
+        $response->setCode(config('json-exception-handler.codes.default'));
         $response->setDescription($description);
-        $response->setHttpCode(500);
+        $response->setHttpCode(config('json-exception-handler.http_code'));
 
         return $this->response = $response;
     }
@@ -36,6 +37,8 @@ trait JsonHandler
             $this->validationException($exception);
         } elseif ($exception instanceOf ModelNotFoundException) {
             $this->modelNotFoundException($exception);
+        } elseif ($exception instanceOf AuthorizationException) {
+            $this->authorizationException($exception);
         }
 
         return response()->json(

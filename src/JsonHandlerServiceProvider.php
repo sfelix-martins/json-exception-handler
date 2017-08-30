@@ -1,0 +1,25 @@
+<?php
+
+namespace SMartins\JsonHandler;
+
+use Illuminate\Support\ServiceProvider;
+
+class JsonHandlerServiceProvider extends ServiceProvider
+{
+    public function boot()
+    {
+        $this->publishes([
+            $this->configPath() => config_path('json-exception-handler.php')
+        ]);
+    }
+
+    public function register()
+    {
+        $this->mergeConfigFrom($this->configPath(), 'json-exception-handler');
+    }
+
+    public function configPath()
+    {
+        return __DIR__ . '/config/json-exception-handler.php';
+    }
+}

@@ -14,7 +14,7 @@ trait ModelNotFoundHandler
         
         $response = new Response;
         $response->setMessage($entitie. ' not found. #'. $ids);
-        $response->setCode(124);
+        $response->setCode(config('json-exception-handler.codes.model_not_found'));
         $response->setDescription($e->getMessage());
         $response->setHttpCode(404);
 

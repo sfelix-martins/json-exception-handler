@@ -11,7 +11,7 @@ trait ValidationHandler
     {
         $response = new Response;
         $response->setMessage('The given data failed to pass validation.');
-        $response->setCode(122);
+        $response->setCode(config('json-exception-handler.codes.validation'));
         $response->setErrors($this->formattedErrors($exception));
         $response->setHttpCode(422);
 
@@ -26,13 +26,9 @@ trait ValidationHandler
     public function getTreatedMessages($exception)
     {
         $messages = [];
-        // ValidationException from \Illuminate\Foundation\Validation\ValidationRequests trait
-        // used on Controller return a Illuminate\Http\JsonResponse
         if ($exception->response) {
             $messages = $this->getMessagesFromJsonResponse($exception);
         } else {
-            // ValidationException from Illuminate\Validation\Validator has another
-            // way to get messages
             $messages = $this->getMessagesFromValidator($exception);
         }
 
@@ -54,7 +50,7 @@ trait ValidationHandler
         $errors = [];
         foreach ($messages as $field => $message) {
             $error = [
-                'code' => 12,
+                'code' => config('json-exception-handler.codes.validation_fields.'.$field),
                 'field' => $field,
                 'message' => $message
             ];
