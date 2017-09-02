@@ -33,16 +33,16 @@ trait JsonHandler
     {
         $this->setDefaultResponse($exception);
 
-        if ($exception instanceOf ValidationException) {
+        if ($exception instanceof ValidationException) {
             $this->validationException($exception);
-        } elseif ($exception instanceOf ModelNotFoundException) {
+        } elseif ($exception instanceof ModelNotFoundException) {
             $this->modelNotFoundException($exception);
-        } elseif ($exception instanceOf AuthorizationException) {
+        } elseif ($exception instanceof AuthorizationException) {
             $this->authorizationException($exception);
         }
 
         return response()->json(
-            $this->response->toArray(), 
+            $this->response->toArray(),
             $this->response->getHttpCode()
         );
     }

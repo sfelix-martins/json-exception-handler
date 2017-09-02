@@ -31,6 +31,6 @@ return [
     | The http code value to not managed exceptions. Generally the code used is
     | 500 - Internal Server Error. 
     */
-   'http_code' => 500,
+    'http_code' => 500,
 
 ];

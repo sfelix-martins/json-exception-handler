@@ -54,7 +54,7 @@ Install the package
 $ composer require sfelix-martins/json-exception-handler
 ```
 
-Add the `JsonHandlerServiceProvider` to your `config/app.php` providers array:
+If you are not using **Laravel 5.5** version add the `JsonHandlerServiceProvider` to your `config/app.php` providers array:
 
 ```php
     'providers' => [

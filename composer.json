@@ -17,5 +17,12 @@
         "psr-4": {
             "SMartins\\JsonHandler\\": "src/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SMartins\\JsonHandler\\JsonHandlerServiceProvider"
+            ]
+        }
     }
 }
