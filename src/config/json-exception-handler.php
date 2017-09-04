@@ -20,7 +20,8 @@ return [
         'validation_fields' => [
             'name' => 141,
             'email' => 142,
-        ]
+        ],
+        'not_found_http' => 15,
     ],
 
     /*

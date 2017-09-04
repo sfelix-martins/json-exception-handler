@@ -9,13 +9,10 @@ trait ValidationHandler
 {
     public function validationException(ValidationException $exception)
     {
-        $response = new Response;
-        $response->setMessage('The given data failed to pass validation.');
-        $response->setCode(config('json-exception-handler.codes.validation'));
-        $response->setErrors($this->formattedErrors($exception));
-        $response->setHttpCode(422);
-
-        return $this->response = $response;
+        $this->response->setMessage('The given data failed to pass validation.');
+        $this->response->setCode($this->getCode('validation'));
+        $this->response->setErrors($this->formattedErrors($exception));
+        $this->response->setHttpCode(422);
     }
 
     public function formattedErrors(ValidationException $exception)

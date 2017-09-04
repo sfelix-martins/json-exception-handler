@@ -105,9 +105,6 @@ class Handler extends ExceptionHandler
 
 ```php
 
-use App\User;
-use Validator;
-
 class UserController extends Controller
 {
     ...
@@ -115,10 +112,20 @@ class UserController extends Controller
     public function store(Request $request)
     {
         // If validate fails
-        $this->validate($request, $this->rules);
+        $this->validate($request, $rules);
 
         //or
-        Validator::make($request->all(), $this->rules)->validate();
+        Validator::make($request->all(), $rules)->validate();
+
+        if (condition()) {
+            // Generate response with http code and message
+            abort(403, 'Action forbidden!');
+        }
+
+        if (anotherCondition()) {
+            // Generate response with message and code
+            throw new TokenMismatchException("Error Processing Request", 10);
+        }
     }
 
     public function show($id)

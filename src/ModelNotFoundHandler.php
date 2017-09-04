@@ -7,18 +7,15 @@ use SMartins\JsonHandler\Responses\Response;
 
 trait ModelNotFoundHandler
 {
-    public function modelNotFoundException(ModelNotFoundException $e)
+    public function modelNotFoundException(ModelNotFoundException $exception)
     {
-        $entitie = $this->extractEntitieName($e->getModel());
-        $ids = implode($e->getIds(), ',');
+        $entitie = $this->extractEntitieName($exception->getModel());
+        $ids = implode($exception->getIds(), ',');
         
-        $response = new Response;
-        $response->setMessage($entitie. ' not found. #'. $ids);
-        $response->setCode(config('json-exception-handler.codes.model_not_found'));
-        $response->setDescription($e->getMessage());
-        $response->setHttpCode(404);
-
-        return $this->response = $response;
+        $this->response->setMessage($entitie. ' not found. #'. $ids);
+        $this->response->setCode($this->getCode('model_not_found'));
+        $this->response->setDescription($exception->getMessage());
+        $this->response->setHttpCode(404);
     }
 
     public function extractEntitieName($model)
