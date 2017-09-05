@@ -13,10 +13,22 @@ trait JsonHandler
 {
     use ValidationHandler, ModelNotFoundHandler, AuthorizationHandler, NotFoundHttpHandler;
 
+    /**
+     * Response instance used to get response
+     * @var Smartins\JsonHandler\Responses\Response
+     */
     public $response;
 
+    /**
+     * Receive exception instance to be used on methods
+     * @var Exception
+     */
     private $exception;
 
+    /**
+     * Set the default response on $response attribute. Get default value from
+     * methods
+     */
     public function setDefaultResponse()
     {
         $this->response->setMessage($this->getMessage());
@@ -25,11 +37,21 @@ trait JsonHandler
         $this->response->setHttpCode($this->getHttpCode());
     }
 
+    /**
+     * Get default message from exception
+     *
+     * @return string Exception message
+     */
     public function getMessage()
     {
         return $this->exception->getMessage();
     }
 
+    /**
+     * Mount the description with exception class, line and file
+     *
+     * @return string
+     */
     public function getDescription()
     {
         return class_basename($this->exception).
@@ -37,6 +59,12 @@ trait JsonHandler
             ' in '. basename($this->exception->getFile());
     }
 
+    /**
+     * Get default http code. Check if exception has getStatusCode() methods.
+     * If not get from config file.
+     *
+     * @return integer
+     */
     public function getHttpCode()
     {
         $httpCode = config('json-exception-handler.http_code');
@@ -47,6 +75,12 @@ trait JsonHandler
         return $httpCode;
     }
 
+    /**
+     * Get error code. If code is empty from config file based on type.
+     *
+     * @param  string $type Code type from config file
+     * @return integer
+     */
     public function getCode($type = 'default')
     {
         $code = $this->exception->getCode();
@@ -57,6 +91,13 @@ trait JsonHandler
         return $code;
     }
 
+    /**
+     * Handle the json response. Check if exception is treated. If true call
+     * the specific handler. If false set the default response to be returned.
+     *
+     * @param  Exception $exception
+     * @return JsonResponse
+     */
     public function jsonResponse(Exception $exception)
     {
         $this->exception = $exception;

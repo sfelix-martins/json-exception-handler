@@ -7,6 +7,11 @@ use SMartins\JsonHandler\Responses\Response;
 
 trait ModelNotFoundHandler
 {
+    /**
+     * Set the response if Exception is ModelNotFound
+     *
+     * @param  ModelNotFoundException $exception
+     */
     public function modelNotFoundException(ModelNotFoundException $exception)
     {
         $entitie = $this->extractEntitieName($exception->getModel());
@@ -18,6 +23,12 @@ trait ModelNotFoundHandler
         $this->response->setHttpCode(404);
     }
 
+    /**
+     * Get entitie name based on model path to mount the message.
+     *
+     * @param  string $model
+     * @return string
+     */
     public function extractEntitieName($model)
     {
         $entitieName = explode('\\', $model);

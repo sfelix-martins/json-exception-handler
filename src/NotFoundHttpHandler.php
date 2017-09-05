@@ -7,6 +7,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 trait NotFoundHttpHandler
 {
+    /**
+     * Set response parameters to NotFoundHttpException
+     *
+     * @param  NotFoundHttpException $exception
+     */
     public function notFoundHttpException(NotFoundHttpException $exception)
     {
         $this->response->setMessage($this->getMessage($exception));
@@ -15,7 +20,14 @@ trait NotFoundHttpHandler
         $this->response->setHttpCode($exception->getStatusCode());
     }
 
-    public function getMessage($exception)
+    /**
+     * Get message based on file. If file is RouteCollection return specific
+     * message
+     *
+     * @param  NotFoundHttpException $exception
+     * @return string
+     */
+    public function getMessage(NotFoundHttpException $exception)
     {
         $message = !empty($exception->getMessage()) ? $exception->getMessage() : class_basename($exception);
         if (basename($exception->getFile()) === 'RouteCollection.php') {
