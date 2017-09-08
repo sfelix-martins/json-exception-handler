@@ -14,7 +14,7 @@ trait NotFoundHttpHandler
      */
     public function notFoundHttpException(NotFoundHttpException $exception)
     {
-        $this->response->setMessage($this->getMessage($exception));
+        $this->response->setMessage($this->getNotFoundMessage($exception));
         $this->response->setCode($this->getCode('not_found_http'));
         $this->response->setDescription($this->getDescription($exception));
         $this->response->setHttpCode($exception->getStatusCode());
@@ -27,7 +27,7 @@ trait NotFoundHttpHandler
      * @param  NotFoundHttpException $exception
      * @return string
      */
-    public function getMessage(NotFoundHttpException $exception)
+    public function getNotFoundMessage(NotFoundHttpException $exception)
     {
         $message = !empty($exception->getMessage()) ? $exception->getMessage() : class_basename($exception);
         if (basename($exception->getFile()) === 'RouteCollection.php') {
