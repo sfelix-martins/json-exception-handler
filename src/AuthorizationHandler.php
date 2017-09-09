@@ -2,7 +2,6 @@
 
 namespace SMartins\JsonHandler;
 
-use SMartins\JsonHandler\Responses\Response;
 use Illuminate\Auth\Access\AuthorizationException;
 
 trait AuthorizationHandler
