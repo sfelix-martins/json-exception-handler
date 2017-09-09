@@ -1,0 +1,9 @@
+preset: laravel
+
+linting: true
+
+finder:
+  exclude:
+    - "tests"
+  name:
+    - "*.php"
