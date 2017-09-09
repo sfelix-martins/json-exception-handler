@@ -1,5 +1,7 @@
 # Laravel Json Exception Handler
 
+[![StyleCI](https://styleci.io/repos/101529653/shield)](https://styleci.io/repos/101529653)
+
 Adds methods to your `App\Exceptions\Handler` to treat json responses.
 It is most useful if you are building APIs!
 
