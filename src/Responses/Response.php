@@ -70,10 +70,10 @@ class Response
             'message'   => $this->getMessage(),
             'code'      => $this->getCode(),
         ];
-        if (!is_null($this->getErrors())) {
+        if (! is_null($this->getErrors())) {
             $response['errors'] = $this->getErrors();
         }
-        if (!is_null($this->getDescription())) {
+        if (! is_null($this->getDescription())) {
             $response['description'] = $this->getDescription();
         }
 
