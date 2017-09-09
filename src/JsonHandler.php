@@ -3,10 +3,6 @@
 namespace SMartins\JsonHandler;
 
 use Exception;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Auth\Access\AuthorizationException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use SMartins\JsonHandler\Responses\Response;
 
 trait JsonHandler
@@ -14,20 +10,22 @@ trait JsonHandler
     use ValidationHandler, ModelNotFoundHandler, AuthorizationHandler, NotFoundHttpHandler;
 
     /**
-     * Response instance used to get response
+     * Response instance used to get response.
+     *
      * @var Smartins\JsonHandler\Responses\Response
      */
     public $response;
 
     /**
-     * Receive exception instance to be used on methods
+     * Receive exception instance to be used on methods.
+     *
      * @var Exception
      */
     private $exception;
 
     /**
      * Set the default response on $response attribute. Get default value from
-     * methods
+     * methods.
      */
     public function setDefaultResponse()
     {
@@ -38,7 +36,7 @@ trait JsonHandler
     }
 
     /**
-     * Get default message from exception
+     * Get default message from exception.
      *
      * @return string Exception message
      */
@@ -48,22 +46,22 @@ trait JsonHandler
     }
 
     /**
-     * Mount the description with exception class, line and file
+     * Mount the description with exception class, line and file.
      *
      * @return string
      */
     public function getDescription()
     {
         return class_basename($this->exception).
-            ' line '. $this->exception->getLine().
-            ' in '. basename($this->exception->getFile());
+            ' line '.$this->exception->getLine().
+            ' in '.basename($this->exception->getFile());
     }
 
     /**
      * Get default http code. Check if exception has getStatusCode() methods.
      * If not get from config file.
      *
-     * @return integer
+     * @return int
      */
     public function getHttpCode()
     {
@@ -78,14 +76,15 @@ trait JsonHandler
     /**
      * Get error code. If code is empty from config file based on type.
      *
-     * @param  string $type Code type from config file
-     * @return integer
+     * @param string $type Code type from config file
+     *
+     * @return int
      */
     public function getCode($type = 'default')
     {
         $code = $this->exception->getCode();
         if (empty($this->exception->getCode())) {
-            $code = config('json-exception-handler.codes.'. $type);
+            $code = config('json-exception-handler.codes.'.$type);
         }
 
         return $code;
@@ -95,13 +94,14 @@ trait JsonHandler
      * Handle the json response. Check if exception is treated. If true call
      * the specific handler. If false set the default response to be returned.
      *
-     * @param  Exception $exception
+     * @param Exception $exception
+     *
      * @return JsonResponse
      */
     public function jsonResponse(Exception $exception)
     {
         $this->exception = $exception;
-        $this->response = new Response;
+        $this->response = new Response();
 
         if ($this->exceptionIsTreated()) {
             $this->callExceptionHandler();
@@ -118,8 +118,9 @@ trait JsonHandler
     /**
      * Check if method to treat exception exists.
      *
-     * @param  Exception $exception The exception to be checked
-     * @return boolean              If method is callable
+     * @param Exception $exception The exception to be checked
+     *
+     * @return bool If method is callable
      */
     public function exceptionIsTreated()
     {
@@ -129,8 +130,9 @@ trait JsonHandler
     /**
      * Call the exception handler after of to check if the method exists.
      *
-     * @param  Exception $exception
-     * @return void                 Call the method
+     * @param Exception $exception
+     *
+     * @return void Call the method
      */
     public function callExceptionHandler()
     {
@@ -140,8 +142,9 @@ trait JsonHandler
     /**
      * The method name is the exception name with first letter in lower case.
      *
-     * @param  Exception $exception
-     * @return string               The method name
+     * @param Exception $exception
+     *
+     * @return string The method name
      */
     public function methodName()
     {

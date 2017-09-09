@@ -68,7 +68,7 @@ class Response
     {
         $response = [
             'message'   => $this->getMessage(),
-            'code'      => $this->getCode()
+            'code'      => $this->getCode(),
         ];
         if (!is_null($this->getErrors())) {
             $response['errors'] = $this->getErrors();
