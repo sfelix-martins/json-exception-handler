@@ -34,9 +34,9 @@ trait AuthorizationHandler
     public function getWords($action)
     {
         $words = explode('.', $action);
-        if (!(count($words) > 1)) {
+        if (! (count($words) > 1)) {
             $words = explode('-', $action);
-            if (!(count($words) > 1)) {
+            if (! (count($words) > 1)) {
                 $words = preg_split('/(?=[A-Z])/', $action);
             }
         }

@@ -2,8 +2,8 @@
 
 namespace SMartins\JsonHandler;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use SMartins\JsonHandler\Responses\Response;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 trait ModelNotFoundHandler
 {

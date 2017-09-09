@@ -2,8 +2,8 @@
 
 namespace SMartins\JsonHandler;
 
-use Illuminate\Validation\ValidationException;
 use SMartins\JsonHandler\Responses\Response;
+use Illuminate\Validation\ValidationException;
 
 trait ValidationHandler
 {
