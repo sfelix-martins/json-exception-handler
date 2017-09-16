@@ -13,7 +13,6 @@ trait ValidationHandler
      */
     public function validationException(ValidationException $exception)
     {
-        // Json Api Response
         $this->jsonApiResponse->setStatus(422);
         $this->jsonApiResponse->setErrors($this->jsonApiFormatErrorMessages($exception));
     }
@@ -84,19 +83,7 @@ trait ValidationHandler
      */
     public function getTreatedMessages($exception)
     {
-        $messages = [];
-        if ($exception->response) {
-            $messages = $this->getMessagesFromJsonResponse($exception);
-        } else {
-            $messages = $this->getMessagesFromValidator($exception);
-        }
-
-        return $messages;
-    }
-
-    public function getMessagesFromJsonResponse($exception)
-    {
-        return $exception->response->original;
+        return $this->getMessagesFromValidator($exception);
     }
 
     public function getMessagesFromValidator($exception)
@@ -106,14 +93,7 @@ trait ValidationHandler
 
     public function getTreatedFails($exception)
     {
-        $fails = [];
-        if ($exception->response) {
-            $fails = $this->getMessagesFromJsonResponse($exception);
-        } else {
-            $fails = $this->getFailsFromValidator($exception);
-        }
-
-        return $fails;
+        return $this->getFailsFromValidator($exception);
     }
 
     public function getFailsFromValidator($exception)
