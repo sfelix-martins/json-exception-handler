@@ -19,7 +19,7 @@ trait ValidationHandler
 
     /**
      * Get formatted errors on standard code, field, message to each field with
-     * error
+     * error.
      *
      * @param  ValidationException $exception
      * @return array
@@ -32,7 +32,7 @@ trait ValidationHandler
     public function jsonApiFormatErrorMessages(ValidationException $exception)
     {
         $validationMessages = $this->getTreatedMessages($exception);
-        $validationFails    = $this->getTreatedFails($exception);
+        $validationFails = $this->getTreatedFails($exception);
 
         $errors = [];
         foreach ($validationMessages as $field => $messages) {

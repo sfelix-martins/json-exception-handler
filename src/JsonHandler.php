@@ -3,37 +3,33 @@
 namespace SMartins\JsonHandler;
 
 use Exception;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Auth\Access\AuthorizationException;
 use SMartins\JsonHandler\Responses\JsonApiResponse;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 trait JsonHandler
 {
     use ValidationHandler, ModelNotFoundHandler, AuthorizationHandler, NotFoundHttpHandler;
 
     /**
-     * Config file name
+     * Config file name.
      * @var string
      */
     public $configFile = 'json-exception-handler';
 
     /**
-     * JsonApiResponse instance used on another traits to set response
+     * JsonApiResponse instance used on another traits to set response.
      * @var SMartins\JsonHandler\Responses\JsonApiResponse;
      */
     public $jsonApiResponse;
 
     /**
-     * Receive exception instance to be used on methods
+     * Receive exception instance to be used on methods.
      * @var Exception
      */
     private $exception;
 
     /**
      * Set the default response on $response attribute. Get default value from
-     * methods
+     * methods.
      */
     public function setDefaultResponse()
     {
@@ -50,7 +46,7 @@ trait JsonHandler
     }
 
     /**
-     * Get default message from exception
+     * Get default message from exception.
      *
      * @return string Exception message
      */
@@ -60,22 +56,22 @@ trait JsonHandler
     }
 
     /**
-     * Mount the description with exception class, line and file
+     * Mount the description with exception class, line and file.
      *
      * @return string
      */
     public function getDescription()
     {
         return class_basename($this->exception).
-            ' line '. $this->exception->getLine().
-            ' in '. basename($this->exception->getFile());
+            ' line '.$this->exception->getLine().
+            ' in '.basename($this->exception->getFile());
     }
 
     /**
      * Get default http code. Check if exception has getStatusCode() methods.
      * If not get from config file.
      *
-     * @return integer
+     * @return int
      */
     public function getStatusCode()
     {
@@ -92,13 +88,13 @@ trait JsonHandler
      * Get error code. If code is empty from config file based on type.
      *
      * @param  string $type Code type from config file
-     * @return integer
+     * @return int
      */
     public function getCode($type = 'default')
     {
         $code = $this->exception->getCode();
         if (empty($this->exception->getCode())) {
-            $code = config($this->configFile.'.codes.'. $type);
+            $code = config($this->configFile.'.codes.'.$type);
         }
 
         return $code;
@@ -132,7 +128,7 @@ trait JsonHandler
      * Check if method to treat exception exists.
      *
      * @param  Exception $exception The exception to be checked
-     * @return boolean              If method is callable
+     * @return bool              If method is callable
      */
     public function exceptionIsTreated()
     {
