@@ -25,7 +25,7 @@ return [
             ],
             'email' => [
                 'default'   => 142,
-                'email'     => 1421
+                'email'     => 1421,
             ],
             'password' => [
                 'default'   => 143,
