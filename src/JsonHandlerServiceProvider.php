@@ -9,7 +9,7 @@ class JsonHandlerServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            $this->configPath() => config_path('json-exception-handler.php'),
+            $this->configPath() => config_path('json-exception-handler.php')
         ]);
     }
 
@@ -20,6 +20,6 @@ class JsonHandlerServiceProvider extends ServiceProvider
 
     public function configPath()
     {
-        return __DIR__.'/config/json-exception-handler.php';
+        return __DIR__ . '/config/json-exception-handler.php';
     }
 }

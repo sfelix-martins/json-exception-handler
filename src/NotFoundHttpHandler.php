@@ -2,30 +2,35 @@
 
 namespace SMartins\JsonHandler;
 
-use SMartins\JsonHandler\Responses\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 trait NotFoundHttpHandler
 {
     /**
-     * Set response parameters to NotFoundHttpException.
+     * Set response parameters to NotFoundHttpException
      *
-     * @param NotFoundHttpException $exception
+     * @param  NotFoundHttpException $exception
      */
     public function notFoundHttpException(NotFoundHttpException $exception)
     {
-        $this->response->setMessage($this->getNotFoundMessage($exception));
-        $this->response->setCode($this->getCode('not_found_http'));
-        $this->response->setDescription($this->getDescription($exception));
-        $this->response->setHttpCode($exception->getStatusCode());
+        $statuCode = $exception->getStatusCode();
+        $error = [[
+            'status'    => $statuCode,
+            'code'      => $this->getCode('not_found_http'),
+            'source'    => ['pointer' => ''],
+            'title'     => $this->getNotFoundMessage($exception),
+            'detail'    => $this->getDescription($exception),
+        ]];
+
+        $this->jsonApiResponse->setStatus($statuCode);
+        $this->jsonApiResponse->setErrors($error);
     }
 
     /**
      * Get message based on file. If file is RouteCollection return specific
-     * message.
+     * message
      *
-     * @param NotFoundHttpException $exception
-     *
+     * @param  NotFoundHttpException $exception
      * @return string
      */
     public function getNotFoundMessage(NotFoundHttpException $exception)

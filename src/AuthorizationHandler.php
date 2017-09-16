@@ -8,9 +8,16 @@ trait AuthorizationHandler
 {
     public function authorizationException(AuthorizationException $exception)
     {
-        $this->response->setMessage($exception->getMessage());
-        $this->response->setCode($this->getCode('authorization'));
-        $this->response->setHttpCode(403);
+        $error = [[
+            'status'    => 403,
+            'code'      => $this->getCode('authorization'),
+            'source'    => ['pointer' => ''],
+            'title'     => 'Action not allowed.',
+            'detail'    => $exception->getMessage(),
+        ]];
+
+        $this->jsonApiResponse->setStatus(403);
+        $this->jsonApiResponse->setErrors($error);
     }
 
     public function generateDescription($traces)
