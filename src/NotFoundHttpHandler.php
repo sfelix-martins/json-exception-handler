@@ -35,7 +35,7 @@ trait NotFoundHttpHandler
      */
     public function getNotFoundMessage(NotFoundHttpException $exception)
     {
-        $message = !empty($exception->getMessage()) ? $exception->getMessage() : class_basename($exception);
+        $message = ! empty($exception->getMessage()) ? $exception->getMessage() : class_basename($exception);
         if (basename($exception->getFile()) === 'RouteCollection.php') {
             $message = 'Route not found.';
         }
