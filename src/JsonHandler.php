@@ -41,7 +41,7 @@ trait JsonHandler
             'detail'    => $this->getDescription(),
         ]];
 
-        $this->jsonApiResponse->setStatus(403);
+        $this->jsonApiResponse->setStatus($this->getStatusCode());
         $this->jsonApiResponse->setErrors($error);
     }
 
