@@ -7,7 +7,7 @@ use SMartins\JsonHandler\Responses\JsonApiResponse;
 
 trait JsonHandler
 {
-    use ValidationHandler, ModelNotFoundHandler, AuthorizationHandler, NotFoundHttpHandler;
+    use ValidationHandler, ModelNotFoundHandler, AuthorizationHandler, NotFoundHttpHandler, AuthenticationHandler;
 
     /**
      * Config file name.
