@@ -13,7 +13,7 @@ trait AuthenticationHandler
             'code'      => $this->getCode('authentication'),
             'source'    => ['pointer' => ''],
             'title'     => $exception->getMessage(),
-            'detail'    => 'The request was made by an unauthenticated user.',
+            'detail'    => __('exception::exceptions.authentication.detail'),
         ]];
 
         $this->jsonApiResponse->setStatus(401);

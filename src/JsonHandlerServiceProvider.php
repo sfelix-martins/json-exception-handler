@@ -11,6 +11,8 @@ class JsonHandlerServiceProvider extends ServiceProvider
         $this->publishes([
             $this->configPath() => config_path('json-exception-handler.php'),
         ]);
+
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'exception');
     }
 
     public function register()

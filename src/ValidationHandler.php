@@ -62,7 +62,10 @@ trait ValidationHandler
 
     public function getValidationTitle(array $validationFails, $key, $field)
     {
-        return array_keys($validationFails[$field])[$key].' validation failed on field '.$field;
+        return __('exception::exceptions.validation.title', [
+            'fails' => array_keys($validationFails[$field])[$key],
+            'field' => $field
+        ]);
     }
 
     public function getValidationCode(array $validationFails, $key, $field)

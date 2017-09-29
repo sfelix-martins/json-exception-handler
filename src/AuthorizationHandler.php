@@ -12,7 +12,7 @@ trait AuthorizationHandler
             'status'    => 403,
             'code'      => $this->getCode('authorization'),
             'source'    => ['pointer' => ''],
-            'title'     => 'Action not allowed.',
+            'title'     => __('exception::exceptions.authorization.title'),
             'detail'    => $exception->getMessage(),
         ]];
 
