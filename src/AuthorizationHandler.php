@@ -11,7 +11,7 @@ trait AuthorizationHandler
         $error = [[
             'status'    => 403,
             'code'      => $this->getCode('authorization'),
-            'source'    => ['pointer' => ''],
+            'source'    => ['pointer' => $exception->getFile().':'.$exception->getLine()],
             'title'     => __('exception::exceptions.authorization.title'),
             'detail'    => $exception->getMessage(),
         ]];

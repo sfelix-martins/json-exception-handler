@@ -11,7 +11,7 @@ trait AuthenticationHandler
         $error = [[
             'status'    => 401,
             'code'      => $this->getCode('authentication'),
-            'source'    => ['pointer' => ''],
+            'source'    => ['pointer' => $exception->getFile().':'.$exception->getLine()],
             'title'     => $exception->getMessage(),
             'detail'    => __('exception::exceptions.authentication.detail'),
         ]];
