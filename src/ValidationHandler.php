@@ -64,7 +64,7 @@ trait ValidationHandler
     {
         return __('exception::exceptions.validation.title', [
             'fails' => array_keys($validationFails[$field])[$key],
-            'field' => $field
+            'field' => $field,
         ]);
     }
 
