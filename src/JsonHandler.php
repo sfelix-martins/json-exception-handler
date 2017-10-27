@@ -11,7 +11,8 @@ trait JsonHandler
         ModelNotFoundHandler,
         AuthorizationHandler,
         NotFoundHttpHandler,
-        AuthenticationHandler;
+        AuthenticationHandler,
+        OAuthServerHandler;
 
     /**
      * Config file name.
