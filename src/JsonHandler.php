@@ -13,7 +13,8 @@ trait JsonHandler
         NotFoundHttpHandler,
         AuthenticationHandler,
         OAuthServerHandler,
-        MissingScopeHandler;
+        MissingScopeHandler,
+        BadRequestHttpHandler;
 
     /**
      * Config file name.

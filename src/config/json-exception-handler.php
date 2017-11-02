@@ -37,6 +37,7 @@ return [
         'not_found_http' => 15,
         'authentication' => 16,
         'oauth_server'   => 17,
+        'bad_request'    => 18,
     ],
 
     /*
