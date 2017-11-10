@@ -38,6 +38,10 @@ return [
         'authentication' => 16,
         'oauth_server'   => 17,
         'bad_request'    => 18,
+        'client'         => [
+            'default' => 19,
+            'pagarme' => 20,
+        ],
     ],
 
     /*

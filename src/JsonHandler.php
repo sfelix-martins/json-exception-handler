@@ -14,7 +14,8 @@ trait JsonHandler
         AuthenticationHandler,
         OAuthServerHandler,
         MissingScopeHandler,
-        BadRequestHttpHandler;
+        BadRequestHttpHandler,
+        ClientHandler;
 
     /**
      * Config file name.

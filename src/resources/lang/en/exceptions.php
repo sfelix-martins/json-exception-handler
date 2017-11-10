@@ -26,4 +26,7 @@ return [
     'validation' => [
         'title' => ':Fails validation failed on field :field',
     ],
+    'client' => [
+        'unavailable' => 'Service unavailable now.',
+    ]
 ];
