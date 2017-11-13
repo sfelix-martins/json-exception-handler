@@ -12,9 +12,11 @@ trait ClientHandler
 
         $detail = __('exception::exceptions.client.unavailable');
         $code = $this->getCode('client.default');
-        if ($this->clientExceptionCausers()::PAGARME_HOST == $requestHost) {
-            $detail = $detail;
-            $code = $this->getCode('client.pagarme');
+        if ($this->clientExceptionCausers()->isPagarme($requestHost)) {
+            $pagarMeCode = config($this->configFile.'codes.client.pagarme') ?? $code;
+
+            $detail = $detail.' #'.$pagarMeCode;
+            $code = $pagarMeCode;
         }
 
         $error = [[
@@ -33,6 +35,11 @@ trait ClientHandler
     {
         return new class() {
             const PAGARME_HOST = 'api.pagar.me';
+
+            public function isPagarme($host)
+            {
+                return self::PAGARME_HOST == $host;
+            }
         };
     }
 }
