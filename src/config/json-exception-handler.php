@@ -41,6 +41,7 @@ return [
         'client'         => [
             'default' => 19,
             'pagarme' => 20,
+            'mailgun' => 21,
         ],
     ],
 
