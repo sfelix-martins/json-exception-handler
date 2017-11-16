@@ -44,9 +44,9 @@ trait JsonHandler
         $error = [[
             'status'    => $this->getStatusCode(),
             'code'      => $this->getCode(),
-            'source'    => ['pointer' => ''],
-            'title'     => $this->getMessage(),
-            'detail'    => $this->getDescription(),
+            'source'    => ['pointer' => $this->getDescription()],
+            'title'     => strtolower(class_basename($this->exception)),
+            'detail'    => $this->getMessage(),
         ]];
 
         $this->jsonApiResponse->setStatus($this->getStatusCode());
@@ -72,7 +72,7 @@ trait JsonHandler
     {
         return class_basename($this->exception).
             ' line '.$this->exception->getLine().
-            ' in '.basename($this->exception->getFile());
+            ' in '.$this->exception->getFile();
     }
 
     /**
