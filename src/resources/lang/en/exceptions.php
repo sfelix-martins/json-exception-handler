@@ -28,5 +28,13 @@ return [
     ],
     'client' => [
         'unavailable' => 'Service unavailable now.',
+    ],
+
+    /*
+    | Can set your model here to translate the models names on ModelNotFoundException
+    |
+    */
+    'models' => [
+        'User' => 'Usuário',
     ]
 ];

@@ -102,6 +102,17 @@ Set your exception codes on `config/json-exception-handler.php` on codes array.
 
 You can add more fields and codes to `validation_fields` array.
 
+You can add too your models on lang packages to return the Not Found response translated correctly.
+
+In `resources/lang/vendor/exception/lang/$locale` in `exceptions` file you can set on `models` array. Example:
+
+```php
+    'models' => [
+        'User' => 'Usuário',
+        'Article' => 'Artigo',
+    ]
+```
+
 ## Using
 
 Use the trait on your `App\Exception\Handler` and add method `jsonResponse()` 

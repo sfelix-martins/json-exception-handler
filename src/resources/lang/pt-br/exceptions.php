@@ -12,21 +12,29 @@ return [
     */
 
     'authentication' => [
-        'detail' => 'A requisição foi feita por um usuário não autenticado.',
+        'detail' => 'The request was made by an unauthenticated user.',
     ],
     'authorization' => [
-        'title' => 'Ação não permitida.',
+        'title' => 'Action not allowed.',
     ],
     'model_not_found' => [
-        'title' => ':Model não encontrado(a)',
+        'title' => ':Model not found',
     ],
     'not_found_http' => [
-        'message' => 'Rota não encontrada.',
+        'message' => 'Route not found.',
     ],
     'validation' => [
-        'title' => 'Validação falhou no campo :field',
+        'title' => ':Fails validation failed on field :field',
     ],
     'client' => [
-        'unavailable' => 'Serviço indisponível no momento.',
+        'unavailable' => 'Service unavailable now.',
+    ],
+
+    /*
+    | Can set your model here to translate the models names on ModelNotFoundException
+    |
+    */
+    'models' => [
+        'User' => 'Usuário',
     ]
 ];

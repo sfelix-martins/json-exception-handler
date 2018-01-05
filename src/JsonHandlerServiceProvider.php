@@ -13,6 +13,10 @@ class JsonHandlerServiceProvider extends ServiceProvider
         ]);
 
         $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'exception');
+
+        $this->publishes([
+            __DIR__.'/resources/lang' => resource_path('lang/vendor/exception'),
+        ]);
     }
 
     public function register()

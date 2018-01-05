@@ -20,8 +20,8 @@ trait ModelNotFoundHandler
             'status'    => 404,
             'code'      => $this->getCode('model_not_found'),
             'source'    => ['pointer' => 'data/id'],
-            'title'     => __('exception::exceptions.model_not_found.title', ['model' => $entitie]),
-            'detail'    => $exception->getMessage(),
+            'title'     => $exception->getMessage(),
+            'detail'    => __('exception::exceptions.model_not_found.title', ['model' => $entitie]),
         ]];
 
         $this->jsonApiResponse->setStatus(404);
@@ -38,6 +38,6 @@ trait ModelNotFoundHandler
     {
         $entitieName = explode('\\', $model);
 
-        return end($entitieName);
+        return __('exception::exceptions.models.'.end($entitieName));
     }
 }
