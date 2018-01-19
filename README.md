@@ -68,11 +68,16 @@ To `Illuminate\Validation\ValidationException`:
 
 ### Treated Exceptions
 
-- `Illuminate\Validation\ValidationException`
-- `Illuminate\Database\Eloquent\ModelNotFoundException`
 - `Illuminate\Auth\Access\AuthorizationException`
-- `Symfony\Component\HttpKernel\Exception\NotFoundHttpException`
 - `Illuminate\Auth\AuthenticationException`
+- `Illuminate\Database\Eloquent\ModelNotFoundException`
+- `Illuminate\Validation\ValidationException`
+- `Laravel\Passport\Exceptions\MissingScopeException`
+- `League\OAuth2\Server\Exception\OAuthServerException`
+- `Symfony\Component\HttpKernel\Exception\NotFoundHttpException`
+- `Symfony\Component\HttpKernel\Exception\BadRequestHttpException`
+- `GuzzleHttp\Exception\ClientException`
+- `Cielo\API30\Ecommerce\Request\CieloRequestException`
 
 ## Installing and configuring
 

@@ -13,7 +13,8 @@ trait ModelNotFoundHandler
      */
     public function modelNotFoundException(ModelNotFoundException $exception)
     {
-        $entitie = $this->extractEntitieName($exception->getModel());
+        $entity = $this->extractEntityName($exception->getModel());
+
         $ids = implode($exception->getIds(), ',');
 
         $error = [[
@@ -21,7 +22,7 @@ trait ModelNotFoundHandler
             'code'      => $this->getCode('model_not_found'),
             'source'    => ['pointer' => 'data/id'],
             'title'     => $exception->getMessage(),
-            'detail'    => __('exception::exceptions.model_not_found.title', ['model' => $entitie]),
+            'detail'    => __('exception::exceptions.model_not_found.title', ['model' => $entity]),
         ]];
 
         $this->jsonApiResponse->setStatus(404);
@@ -34,10 +35,42 @@ trait ModelNotFoundHandler
      * @param  string $model
      * @return string
      */
-    public function extractEntitieName($model)
+    public function extractEntityName($model)
     {
-        $entitieName = explode('\\', $model);
+        $classNames = (array) explode('\\', $model);
 
-        return __('exception::exceptions.models.'.end($entitieName));
+        $entityName = end($classNames);
+
+        if ($this->entityHasTranslation($entityName)) {
+            return __('exception::exceptions.models.'.$entityName);
+        }
+
+        return $entityName;
+    }
+
+    /**
+     * Check if entity returned on ModelNotFoundException has translation on
+     * exceptions file
+     * @param  string $entityName The model name to check if has translation
+     * @return bool               Has translation or not
+     */
+    public function entityHasTranslation(string $entityName): bool
+    {
+        $hasKey = in_array($entityName, $this->translationModelKeys());
+
+        if ($hasKey) {
+            return ! empty($hasKey);
+        }
+
+        return false;
+    }
+
+    /**
+     * Get the models keys on exceptions lang file
+     * @return array An array with keys to translate
+     */
+    private function translationModelKeys(): array
+    {
+        return array_keys(__('exception::exceptions.models'));
     }
 }
