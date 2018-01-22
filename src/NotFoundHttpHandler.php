@@ -15,11 +15,11 @@ trait NotFoundHttpHandler
     {
         $statuCode = $exception->getStatusCode();
         $error = [[
-            'status'    => $statuCode,
-            'code'      => $this->getCode('not_found_http'),
-            'source'    => ['pointer' => $exception->getFile().':'.$exception->getLine()],
-            'title'     => $this->getNotFoundMessage($exception),
-            'detail'    => $this->getDescription($exception),
+            'status' => $statuCode,
+            'code'   => $this->getCode('not_found_http'),
+            'source' => ['pointer' => $exception->getFile().':'.$exception->getLine()],
+            'title'  => $this->getDescription($exception),
+            'detail' => $this->getNotFoundMessage($exception),
         ]];
 
         $this->jsonApiResponse->setStatus($statuCode);
