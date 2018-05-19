@@ -59,9 +59,7 @@ abstract class AbstractHandler
      * Handle with an exception according to specific definitions. Returns one
      * or more errors using the exception from $exceptions attribute.
      *
-     * @return array|\Illuminate\Support\Collection|
-     *         \Smartins\Exceptions\JsonApi\ErrorCollection|
-     *         \SMartins\Exceptions\JsonApi\Error
+     * @return \SMartins\Exceptions\JsonApi\Error|\Smartins\Exceptions\JsonApi\ErrorCollection|array|\Illuminate\Support\Collection
      */
     abstract public function handle();
 
