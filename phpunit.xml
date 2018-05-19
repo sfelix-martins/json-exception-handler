@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false"
+<phpunit bootstrap="vendor/autoload.php"
+         backupGlobals="false"
          backupStaticAttributes="false"
-         bootstrap="vendor/autoload.php"
          colors="true"
+         verbose="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
-         processIsolation="true"
-         stopOnError="false"
-         stopOnFailure="false"
-         syntaxCheck="true"
-         verbose="true"
->
+         processIsolation="false"
+         stopOnFailure="false">
     <testsuites>
         <testsuite name="Json Exception Handler">
-            <directory suffix=".php">./tests/</directory>
+            <directory>./tests/</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory>./src</directory>
+            <directory suffix=".php">./src/</directory>
         </whitelist>
     </filter>
+    <php>
+        <env name="DB_CONNECTION" value="testing"/>
+        <env name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>
+    </php>
 </phpunit>

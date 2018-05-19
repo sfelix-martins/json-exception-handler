@@ -15,14 +15,26 @@
     },
     "autoload": {
         "psr-4": {
-            "SMartins\\JsonHandler\\": "src/"
+            "SMartins\\Exceptions\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "files": [
+            "tests/TestCase.php"
+        ],
+        "psr-4": {
+            "SMartins\\Exceptions\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "SMartins\\JsonHandler\\JsonHandlerServiceProvider"
+                "SMartins\\Exceptions\\JsonHandlerServiceProvider"
             ]
         }
+    },
+    "require-dev": {
+        "orchestra/testbench": "~3.0",
+        "phpunit/phpunit": "^7.1"
     }
 }

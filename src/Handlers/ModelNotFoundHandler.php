@@ -1,36 +1,30 @@
 <?php
 
-namespace SMartins\JsonHandler;
+namespace SMartins\Exceptions\Handlers;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use SMartins\Exceptions\JSONAPI\Error;
+use SMartins\Exceptions\JSONAPI\Source;
 
-trait ModelNotFoundHandler
+class ModelNotFoundHandler extends AbstractHandler
 {
     /**
-     * Set the response if Exception is ModelNotFound.
-     *
-     * @param  ModelNotFoundException $exception
+     * {@inheritDoc}
      */
-    public function modelNotFoundException(ModelNotFoundException $exception)
+    public function handle()
     {
-        $entity = $this->extractEntityName($exception->getModel());
+        $entity = $this->extractEntityName($this->exception->getModel());
 
-        $ids = implode($exception->getIds(), ',');
+        $detail = __('exception::exceptions.model_not_found.title', ['model' => $entity]);
 
-        $error = [[
-            'status'    => 404,
-            'code'      => $this->getCode('model_not_found'),
-            'source'    => ['pointer' => 'data/id'],
-            'title'     => $exception->getMessage(),
-            'detail'    => __('exception::exceptions.model_not_found.title', ['model' => $entity]),
-        ]];
-
-        $this->jsonApiResponse->setStatus(404);
-        $this->jsonApiResponse->setErrors($error);
+        return (new Error)->setStatus(404)
+            ->setCode($this->getCode('model_not_found'))
+            ->setSource((new Source())->setPointer('data/id'))
+            ->setTitle(snake_case(class_basename($this->exception)))
+            ->setDetail($detail);
     }
 
     /**
-     * Get entitie name based on model path to mount the message.
+     * Get entity name based on model path to mount the message.
      *
      * @param  string $model
      * @return string
@@ -50,7 +44,8 @@ trait ModelNotFoundHandler
 
     /**
      * Check if entity returned on ModelNotFoundException has translation on
-     * exceptions file
+     * exceptions file.
+     *
      * @param  string $entityName The model name to check if has translation
      * @return bool               Has translation or not
      */
@@ -66,7 +61,8 @@ trait ModelNotFoundHandler
     }
 
     /**
-     * Get the models keys on exceptions lang file
+     * Get the models keys on exceptions lang file.
+     *
      * @return array An array with keys to translate
      */
     private function translationModelKeys(): array

@@ -1,6 +1,6 @@
 <?php
 
-namespace SMartins\JsonHandler;
+namespace SMartins\Exceptions;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -12,10 +12,10 @@ class JsonHandlerServiceProvider extends ServiceProvider
             $this->configPath() => config_path('json-exception-handler.php'),
         ]);
 
-        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'exception');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'exception');
 
         $this->publishes([
-            __DIR__.'/resources/lang' => resource_path('lang/vendor/exception'),
+            __DIR__.'/../resources/lang' => resource_path('lang/vendor/exception'),
         ]);
     }
 
@@ -26,6 +26,6 @@ class JsonHandlerServiceProvider extends ServiceProvider
 
     public function configPath()
     {
-        return __DIR__.'/config/json-exception-handler.php';
+        return __DIR__.'/../config/json-exception-handler.php';
     }
 }
