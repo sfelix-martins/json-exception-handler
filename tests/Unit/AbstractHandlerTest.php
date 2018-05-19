@@ -2,8 +2,11 @@
 
 namespace SMartins\Exceptions\Tests\Unit;
 
+use InvalidArgumentException;
+use SMartins\Exceptions\JsonApi\Error;
 use SMartins\Exceptions\Tests\TestCase;
 use SMartins\Exceptions\Handlers\Handler;
+use SMartins\Exceptions\JsonApi\ErrorCollection;
 
 class AbstractHandlerTest extends TestCase
 {
@@ -12,5 +15,40 @@ class AbstractHandlerTest extends TestCase
         $handler = new Handler(new \Exception);
 
         $this->assertInstanceOf(Handler::class, $handler->getExceptionHandler());
+    }
+
+    public function testGetDefaultHandler()
+    {
+        $handler = new Handler(new \Exception);
+
+        $this->assertInstanceOf(Handler::class, $handler->defaultHandler());
+    }
+
+    public function testValidateHandledExceptionWithArrayOfErrors()
+    {
+        $errors = [new Error];
+
+        $handler = new Handler(new \Exception);
+        $validated = $handler->validatedHandledException($errors);
+
+        $this->assertInstanceOf(ErrorCollection::class, $validated);
+    }
+
+    public function testValidateHandledExceptionWithCollectionOfErrors()
+    {
+        $errors = collect([new Error]);
+
+        $handler = new Handler(new \Exception);
+        $validated = $handler->validatedHandledException($errors);
+
+        $this->assertInstanceOf(ErrorCollection::class, $validated);
+    }
+
+    public function testValidateHandledExceptionWithInvalidArgument()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $handler = new Handler(new \Exception);
+        $handler->validatedHandledException('invalid');
     }
 }

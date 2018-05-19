@@ -110,7 +110,9 @@ abstract class AbstractHandler
      */
     public function validatedHandledException($errors)
     {
-        if (is_array($errors) || get_class($errors) === Collection::class) {
+        if (is_array($errors) ||
+            (is_object($errors) && get_class($errors) === Collection::class)
+        ) {
             $errors = new ErrorCollection($errors);
         } elseif ($errors instanceof Error) {
             $errors = (new ErrorCollection)->push($errors)->setStatusCode($errors->getStatus());
