@@ -2,9 +2,7 @@
 
 namespace SMartins\Exceptions\JsonApi;
 
-use InvalidArgumentException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Collection;
 
 class Response
 {
@@ -25,22 +23,11 @@ class Response
     /**
      * Create new JsonApi response passing the errors.
      *
-     * @param mixed $errors
+     * @param \SMartins\Exceptions\JsonApi\ErrorCollection $errors
      */
-    public function __construct($errors)
+    public function __construct(ErrorCollection $errors)
     {
-        if ($errors instanceof ErrorCollection) {
-            $this->errors = $errors;
-        } elseif (is_array($errors) || $errors instanceof Collection) {
-            $this->errors = new ErrorCollection($errors);
-        } elseif ($errors instanceof Error) {
-            $this->errors = (new ErrorCollection)->push($errors);
-            $this->errors->setStatusCode($errors->getStatus());
-        } else {
-            throw new InvalidArgumentException('The errors must be an array, '.Collection::class.','.Error::class.' or '.ErrorCollection::class.'.');
-        }
-
-        $this->errors->validate();
+        $this->errors = $errors;
 
         $this->setStatus((int) $this->errors->getStatusCode());
     }

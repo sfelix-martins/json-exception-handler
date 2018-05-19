@@ -45,7 +45,7 @@ class ErrorCollection extends Collection
      *
      * @throws \SMartins\Exceptions\JsonApi\CollectionInvalidContent
      */
-    public function validate()
+    public function validated()
     {
         foreach ($this->items as $item) {
             if ($item instanceof Error === false) {

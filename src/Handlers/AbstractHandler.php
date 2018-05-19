@@ -4,9 +4,13 @@ namespace SMartins\Exceptions\Handlers;
 
 use Exception;
 use RuntimeException;
+use InvalidArgumentException;
+use Illuminate\Support\Collection;
+use SMartins\Exceptions\JsonApi\Error;
 use SMartins\Exceptions\JsonApi\Response;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
+use SMartins\Exceptions\JsonApi\ErrorCollection;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -91,9 +95,32 @@ abstract class AbstractHandler
     {
         $handler = $this->getExceptionHandler();
 
-        $error = $handler->handle();
+        $errors = $this->validatedHandledException($handler->handle());
 
-        return new Response($error);
+        return new Response($errors);
+    }
+
+    /**
+     * Validate response from handle method of handler class.
+     *
+     * @param  mixed $errors
+     * @return \SMartins\Exceptions\JsonApi\ErrorCollection
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function validatedHandledException($errors)
+    {
+        if (is_array($errors) || get_class($errors) === Collection::class) {
+            $errors = new ErrorCollection($errors);
+        } elseif ($errors instanceof Error) {
+            $errors = (new ErrorCollection)->push($errors)->setStatusCode($errors->getStatus());
+        }
+
+        if (! $errors instanceof ErrorCollection) {
+            throw new InvalidArgumentException('The errors must be an array, ['.Collection::class.'], ['.Error::class.'] or ['.ErrorCollection::class.'].');
+        }
+
+        return $errors->validated();
     }
 
     /**
