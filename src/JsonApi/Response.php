@@ -2,6 +2,7 @@
 
 namespace SMartins\Exceptions\JsonApi;
 
+use InvalidArgumentException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 
@@ -17,9 +18,9 @@ class Response
     /**
      * The errors on response.
      *
-     * @var array
+     * @var \SMartins\Exceptions\JsonApi\ErrorCollection
      */
-    protected $errors = [];
+    protected $errors;
 
     /**
      * Create new JsonApi response passing the errors.

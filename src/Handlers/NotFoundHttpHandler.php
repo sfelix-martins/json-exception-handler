@@ -30,7 +30,7 @@ class NotFoundHttpHandler extends AbstractHandler
             ? $this->exception->getMessage()
             : class_basename($this->exception);
 
-        if (basename($exception->getFile()) === 'RouteCollection.php') {
+        if (basename($this->exception->getFile()) === 'RouteCollection.php') {
             $message = __('exception::exceptions.not_found_http.message');
         }
 

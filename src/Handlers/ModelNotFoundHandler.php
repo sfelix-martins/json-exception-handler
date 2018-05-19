@@ -4,9 +4,20 @@ namespace SMartins\Exceptions\Handlers;
 
 use SMartins\Exceptions\JSONAPI\Error;
 use SMartins\Exceptions\JSONAPI\Source;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ModelNotFoundHandler extends AbstractHandler
 {
+    /**
+     * Create instance using the Exception to be handled.
+     *
+     * @param \Illuminate\Database\Eloquent\ModelNotFoundException $e
+     */
+    public function __construct(ModelNotFoundException $e)
+    {
+        parent::__construct($e);
+    }
+
     /**
      * {@inheritDoc}
      */

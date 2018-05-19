@@ -25,7 +25,7 @@ class ValidationHandler extends AbstractHandler
 
                 $error = (new Error)->setStatus(422)
                     ->setSource((new Source())->setPointer($field))
-                    ->setTitle($attributes['title'])
+                    ->setTitle($attributes['title'] ?? $this->getDefaultTitle())
                     ->setDetail($message);
 
                 if (! is_null($attributes['code'])) {

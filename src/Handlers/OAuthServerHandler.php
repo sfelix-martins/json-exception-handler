@@ -4,9 +4,20 @@ namespace SMartins\Exceptions\Handlers;
 
 use SMartins\Exceptions\JsonApi\Error;
 use SMartins\Exceptions\JsonApi\Source;
+use League\OAuth2\Server\Exception\OAuthServerException;
 
 class OAuthServerHandler extends AbstractHandler
 {
+    /**
+     * Create instance using the Exception to be handled.
+     *
+     * @param \League\OAuth2\Server\Exception\OAuthServerException $e
+     */
+    public function __construct(OAuthServerException $e)
+    {
+        parent::__construct($e);
+    }
+
     /**
      * {@inheritDoc}
      */

@@ -50,6 +50,11 @@ abstract class AbstractHandler
         OAuthServerException::class     => OAuthServerHandler::class,
     ];
 
+    /**
+     * Create instance using the Exception to be handled.
+     *
+     * @param Exception $e
+     */
     public function __construct(Exception $e)
     {
         $this->exception = $e;
