@@ -8,9 +8,7 @@ use SMartins\Exceptions\JsonApi\Response;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
-use Laravel\Passport\Exceptions\MissingScopeException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use League\OAuth2\Server\Exception\OAuthServerException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -38,16 +36,16 @@ abstract class AbstractHandler
      * @var array
      */
     protected $internalExceptionHandlers = [
-        Exception::class                => Handler::class,
-        ModelNotFoundException::class   => ModelNotFoundHandler::class,
-        AuthenticationException::class  => AuthenticationHandler::class,
-        AuthorizationException::class   => AuthorizationHandler::class,
-        AuthorizationException::class   => AuthorizationHandler::class,
-        ValidationException::class      => ValidationHandler::class,
-        BadRequestHttpException::class  => BadRequestHttpHandler::class,
-        NotFoundHttpException::class    => NotFoundHttpHandler::class,
-        MissingScopeException::class    => MissingScopeHandler::class,
-        OAuthServerException::class     => OAuthServerHandler::class,
+        Exception::class => Handler::class,
+        ModelNotFoundException::class => ModelNotFoundHandler::class,
+        AuthenticationException::class => AuthenticationHandler::class,
+        AuthorizationException::class => AuthorizationHandler::class,
+        AuthorizationException::class => AuthorizationHandler::class,
+        ValidationException::class => ValidationHandler::class,
+        BadRequestHttpException::class => BadRequestHttpHandler::class,
+        NotFoundHttpException::class => NotFoundHttpHandler::class,
+        'Laravel\Passport\Exceptions\MissingScopeException' => MissingScopeHandler::class,
+        'League\OAuth2\Server\Exception\OAuthServerException' => OAuthServerHandler::class,
     ];
 
     /**
