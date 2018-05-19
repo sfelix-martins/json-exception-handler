@@ -36,15 +36,13 @@ class Response
         } elseif ($errors instanceof Error) {
             $this->errors = (new ErrorCollection)->push($errors);
             $this->errors->setStatusCode($errors->getStatus());
-        }
-
-        if (! $this->errors instanceof ErrorCollection) {
+        } else {
             throw new InvalidArgumentException('The errors must be an array, '.Collection::class.','.Error::class.' or '.ErrorCollection::class.'.');
         }
 
         $this->errors->validate();
 
-        $this->setStatus($this->errors->getStatusCode());
+        $this->setStatus((int) $this->errors->getStatusCode());
     }
 
     /**
@@ -84,7 +82,6 @@ class Response
     /**
      * Convert the object to its JSON representation.
      *
-     * @param  int  $options
      * @return string
      */
     public function json()

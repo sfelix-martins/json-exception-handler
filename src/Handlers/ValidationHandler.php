@@ -49,10 +49,12 @@ class ValidationHandler extends AbstractHandler
 
     public function getValidationTitle(array $validationFails, $key, $field)
     {
-        return __('exception::exceptions.validation.title', [
+        $title = __('exception::exceptions.validation.title', [
             'fails' => array_keys($validationFails[$field])[$key],
             'field' => $field,
         ]);
+
+        return is_array($title) ? $title[0] : $title;
     }
 
     public function getValidationCode(array $validationFails, $key, $field)
