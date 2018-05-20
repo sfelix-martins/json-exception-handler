@@ -24,6 +24,9 @@ class Response
      * Create new JsonApi response passing the errors.
      *
      * @param \SMartins\Exceptions\JsonApi\ErrorCollection $errors
+     *
+     * @todo Receives an abstraction. Create an interfaces that can abstract
+     *       the necessary methods.
      */
     public function __construct(ErrorCollection $errors)
     {
@@ -59,7 +62,7 @@ class Response
     /**
      * Get the errors on response.
      *
-     * @return  array
+     * @return \SMartins\Exceptions\JsonApi\ErrorCollection
      */
     public function getErrors()
     {
@@ -75,7 +78,8 @@ class Response
     {
         return new JsonResponse(
             ['errors' => $this->getErrors()->toArray()],
-            $this->getStatus()
+            $this->getStatus(),
+            $this->getErrors()->getHeaders()
         );
     }
 }

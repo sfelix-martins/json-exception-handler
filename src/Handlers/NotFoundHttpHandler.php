@@ -16,7 +16,7 @@ class NotFoundHttpHandler extends AbstractHandler
             ->setCode($this->getCode('not_found_http'))
             ->setSource((new Source())->setPointer($this->getDefaultPointer()))
             ->setTitle($this->getDefaultTitle())
-            ->setDetail($this->exception->getMessage());
+            ->setDetail($this->getNotFoundMessage());
     }
 
     /**

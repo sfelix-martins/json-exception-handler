@@ -41,9 +41,9 @@ class ValidationHandler extends AbstractHandler
     /**
      * Get the title of response based on rules and field getting from translations.
      *
-     * @param  array  $failedFieldsRules
-     * @param  string $key
-     * @param  string $field
+     * @param  array $failedFieldsRules
+     * @param string $key
+     * @param string $field
      * @return string|null
      */
     public function getValidationTitle(array $failedFieldsRules, string $key, string $field)

@@ -2,8 +2,6 @@
 
 namespace SMartins\Exceptions\JsonApi;
 
-use SMartins\Exceptions\JsonApi\Links;
-use SMartins\Exceptions\JsonApi\Source;
 use Illuminate\Contracts\Support\Arrayable;
 use SMartins\Exceptions\Traits\NotNullArrayable;
 

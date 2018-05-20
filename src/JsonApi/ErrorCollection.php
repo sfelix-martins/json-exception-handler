@@ -2,7 +2,6 @@
 
 namespace SMartins\Exceptions\JsonApi;
 
-use InvalidArgumentException;
 use Illuminate\Support\Collection;
 
 class ErrorCollection extends Collection
@@ -15,13 +14,30 @@ class ErrorCollection extends Collection
     protected $statusCode;
 
     /**
-     * Get the status code.
+     * The HTTP headers on response.
+     *
+     * @var array
+     */
+    protected $headers = [];
+
+    /**
+     * Returns the status code.
      *
      * @return string
      */
     public function getStatusCode()
     {
         return $this->statusCode;
+    }
+
+    /**
+     * Returns response headers.
+     *
+     * @return array headers
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
     }
 
     /**
@@ -39,11 +55,24 @@ class ErrorCollection extends Collection
     }
 
     /**
+     * Set the headers of response.
+     *
+     * @param array $headers
+     * @return self
+     */
+    public function setHeaders(array $headers)
+    {
+        $this->headers = $headers;
+
+        return $this;
+    }
+
+    /**
      * Validate the content of items. All item should to be an instances of Error.
      *
      * @return self
      *
-     * @throws \SMartins\Exceptions\JsonApi\CollectionInvalidContent
+     * @throws \SMartins\Exceptions\JsonApi\InvalidContentException
      */
     public function validated()
     {

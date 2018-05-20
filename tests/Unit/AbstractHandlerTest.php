@@ -24,26 +24,6 @@ class AbstractHandlerTest extends TestCase
         $this->assertInstanceOf(Handler::class, $handler->defaultHandler());
     }
 
-    public function testValidateHandledExceptionWithArrayOfErrors()
-    {
-        $errors = [new Error];
-
-        $handler = new Handler(new \Exception);
-        $validated = $handler->validatedHandledException($errors);
-
-        $this->assertInstanceOf(ErrorCollection::class, $validated);
-    }
-
-    public function testValidateHandledExceptionWithCollectionOfErrors()
-    {
-        $errors = collect([new Error]);
-
-        $handler = new Handler(new \Exception);
-        $validated = $handler->validatedHandledException($errors);
-
-        $this->assertInstanceOf(ErrorCollection::class, $validated);
-    }
-
     public function testValidateHandledExceptionWithInvalidArgument()
     {
         $this->expectException(InvalidArgumentException::class);

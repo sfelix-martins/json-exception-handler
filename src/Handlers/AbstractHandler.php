@@ -3,7 +3,6 @@
 namespace SMartins\Exceptions\Handlers;
 
 use Exception;
-use RuntimeException;
 use InvalidArgumentException;
 use Illuminate\Support\Collection;
 use SMartins\Exceptions\JsonApi\Error;
@@ -66,7 +65,9 @@ abstract class AbstractHandler
      * Handle with an exception according to specific definitions. Returns one
      * or more errors using the exception from $exceptions attribute.
      *
-     * @return \SMartins\Exceptions\JsonApi\Error|\Smartins\Exceptions\JsonApi\ErrorCollection|array|\Illuminate\Support\Collection
+     * @todo Change the return type to any interface to make more extensible.
+     *
+     * @return \SMartins\Exceptions\JsonApi\Error|\Smartins\Exceptions\JsonApi\ErrorCollection
      */
     abstract public function handle();
 
@@ -103,26 +104,20 @@ abstract class AbstractHandler
     /**
      * Validate response from handle method of handler class.
      *
-     * @param  mixed $errors
+     * @param \SMartins\Exceptions\JsonApi\Error|\Smartins\Exceptions\JsonApi\ErrorCollection $errors
      * @return \SMartins\Exceptions\JsonApi\ErrorCollection
      *
      * @throws \InvalidArgumentException
      */
     public function validatedHandledException($errors)
     {
-        if (is_array($errors) ||
-            (is_object($errors) && get_class($errors) === Collection::class)
-        ) {
-            $errors = new ErrorCollection($errors);
+        if ($errors instanceof ErrorCollection) {
+            return $errors->validated();
         } elseif ($errors instanceof Error) {
-            $errors = (new ErrorCollection)->push($errors)->setStatusCode($errors->getStatus());
+            return (new ErrorCollection([$errors]))->setStatusCode($errors->getStatus());
         }
 
-        if (! $errors instanceof ErrorCollection) {
-            throw new InvalidArgumentException('The errors must be an array, ['.Collection::class.'], ['.Error::class.'] or ['.ErrorCollection::class.'].');
-        }
-
-        return $errors->validated();
+        throw new InvalidArgumentException('The errors must be an instance of ['.Error::class.'] or ['.ErrorCollection::class.'].');
     }
 
     /**
