@@ -17,6 +17,12 @@ trait JsonHandler
      */
     public function jsonResponse(Exception $exception)
     {
-        return (new Handler($exception))->handleException()->json();
+        $handler = new Handler($exception);
+
+        if (property_exists($this, 'exceptionHandlers')) {
+            $handler->setExceptionHandlers($this->exceptionHandlers);
+        }
+
+        return $handler->handleException()->json();
     }
 }

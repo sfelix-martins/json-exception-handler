@@ -21,7 +21,7 @@ class AbstractHandlerTest extends TestCase
     {
         $handler = new Handler(new \Exception);
 
-        $this->assertInstanceOf(Handler::class, $handler->defaultHandler());
+        $this->assertInstanceOf(Handler::class, $handler->getDefaultHandler());
     }
 
     public function testValidateHandledExceptionWithInvalidArgument()

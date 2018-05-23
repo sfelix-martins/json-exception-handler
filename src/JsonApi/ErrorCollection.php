@@ -3,8 +3,11 @@
 namespace SMartins\Exceptions\JsonApi;
 
 use Illuminate\Support\Collection;
+use SMartins\Exceptions\Response\ErrorHandledInterface;
+use SMartins\Exceptions\Response\InvalidContentException;
+use SMartins\Exceptions\Response\ErrorHandledCollectionInterface;
 
-class ErrorCollection extends Collection
+class ErrorCollection extends Collection implements ErrorHandledCollectionInterface
 {
     /**
      * The HTTP status code applicable to this problem, expressed as a string value.
@@ -68,17 +71,13 @@ class ErrorCollection extends Collection
     }
 
     /**
-     * Validate the content of items. All item should to be an instances of Error.
-     *
-     * @return self
-     *
-     * @throws \SMartins\Exceptions\JsonApi\InvalidContentException
+     * {@inheritDoc}
      */
-    public function validated()
+    public function validatedContent(string $type): ErrorHandledCollectionInterface
     {
         foreach ($this->items as $item) {
-            if ($item instanceof Error === false) {
-                throw new InvalidContentException('All items on '.self::class.' must to be instances of '.Error::class, 1);
+            if (! $item instanceof $type) {
+                throw new InvalidContentException('All items on ['.self::class.'] must to be instances of ['.$type.'].');
             }
         }
 

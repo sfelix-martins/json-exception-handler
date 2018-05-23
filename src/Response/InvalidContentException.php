@@ -1,6 +1,6 @@
 <?php
 
-namespace SMartins\Exceptions\JsonApi;
+namespace SMartins\Exceptions\Response;
 
 class InvalidContentException extends \Exception
 {

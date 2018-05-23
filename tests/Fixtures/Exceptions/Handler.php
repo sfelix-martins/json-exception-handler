@@ -4,11 +4,26 @@ namespace SMartins\Exceptions\Tests\Fixtures\Exceptions;
 
 use Exception;
 use SMartins\Exceptions\JsonHandler;
+use Illuminate\Auth\Access\AuthorizationException;
+use SMartins\Exceptions\Handlers\NotFoundHttpHandler;
+use SMartins\Exceptions\Handlers\AuthorizationHandler;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
     use JsonHandler;
+
+    /**
+     * An array where the key is the class exception and the value is the handler
+     * class that will treat the exception.
+     *
+     * @var array
+     */
+    protected $exceptionHandlers = [
+        AuthorizationException::class => AuthorizationHandler::class,
+        NotFoundHttpException::class => NotFoundHttpHandler::class,
+    ];
 
     /**
      * A list of the exception types that are not reported.

@@ -4,8 +4,10 @@ namespace SMartins\Exceptions\JsonApi;
 
 use Illuminate\Contracts\Support\Arrayable;
 use SMartins\Exceptions\Traits\NotNullArrayable;
+use SMartins\Exceptions\Response\ErrorHandledInterface;
+use SMartins\Exceptions\Response\ErrorHandledCollectionInterface;
 
-class Error implements Arrayable
+class Error implements Arrayable, ErrorHandledInterface
 {
     use NotNullArrayable;
 
@@ -107,11 +109,9 @@ class Error implements Arrayable
     }
 
     /**
-     * Get the HTTP status code applicable to this problem, expressed as a string value.
-     *
-     * @return  string
+     * {@inheritDoc}
      */
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }
@@ -224,5 +224,13 @@ class Error implements Arrayable
         $this->source = $source;
 
         return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function toCollection(): ErrorHandledCollectionInterface
+    {
+        return new ErrorCollection([$this]);
     }
 }

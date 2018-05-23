@@ -55,4 +55,21 @@ return [
     */
     'http_code' => 500,
 
+    /*
+    |---------------------------------------------------------------------------
+    | Response Handler
+    |---------------------------------------------------------------------------
+    |
+    | Any class the extends of \SMartins\Exceptions\Response\AbstractResponse.
+    */
+    'response_handler' => \SMartins\Exceptions\JsonApi\Response::class,
+
+    /*
+    |---------------------------------------------------------------------------
+    | Exception Handler
+    |--------------------------------------------------------------------------
+    |
+    | The class that will handler the exceptions.
+    */
+    'exception_handler' => \SMartins\Exceptions\Handlers\Handler::class,
 ];

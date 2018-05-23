@@ -3,78 +3,16 @@
 namespace SMartins\Exceptions\JsonApi;
 
 use Illuminate\Http\JsonResponse;
+use SMartins\Exceptions\Response\AbstractResponse;
 
-class Response
+class Response extends AbstractResponse
 {
     /**
-     * The HTTP status code.
+     * Returns JSON response.
      *
-     * @var int
+     * @return \Illuminate\Http\JsonResponse
      */
-    protected $status;
-
-    /**
-     * The errors on response.
-     *
-     * @var \SMartins\Exceptions\JsonApi\ErrorCollection
-     */
-    protected $errors;
-
-    /**
-     * Create new JsonApi response passing the errors.
-     *
-     * @param \SMartins\Exceptions\JsonApi\ErrorCollection $errors
-     *
-     * @todo Receives an abstraction. Create an interfaces that can abstract
-     *       the necessary methods.
-     */
-    public function __construct(ErrorCollection $errors)
-    {
-        $this->errors = $errors;
-
-        $this->setStatus((int) $this->errors->getStatusCode());
-    }
-
-    /**
-     * Get the HTTP status code.
-     *
-     * @return  int
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Set the HTTP status code.
-     *
-     * @param  int  $status  The HTTP status code.
-     *
-     * @return  self
-     */
-    public function setStatus(int $status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get the errors on response.
-     *
-     * @return \SMartins\Exceptions\JsonApi\ErrorCollection
-     */
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-
-    /**
-     * Convert the object to its JSON representation.
-     *
-     * @return string
-     */
-    public function json()
+    public function json(): JsonResponse
     {
         return new JsonResponse(
             ['errors' => $this->getErrors()->toArray()],

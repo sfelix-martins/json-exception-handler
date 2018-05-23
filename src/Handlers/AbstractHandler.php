@@ -6,12 +6,13 @@ use Exception;
 use InvalidArgumentException;
 use Illuminate\Support\Collection;
 use SMartins\Exceptions\JsonApi\Error;
-use SMartins\Exceptions\JsonApi\Response;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
-use SMartins\Exceptions\JsonApi\ErrorCollection;
 use Illuminate\Auth\Access\AuthorizationException;
+use SMartins\Exceptions\Response\ErrorHandledInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use SMartins\Exceptions\JsonApi\Response as JsonApiResponse;
+use SMartins\Exceptions\Response\ErrorHandledCollectionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -42,11 +43,8 @@ abstract class AbstractHandler
         Exception::class => Handler::class,
         ModelNotFoundException::class => ModelNotFoundHandler::class,
         AuthenticationException::class => AuthenticationHandler::class,
-        AuthorizationException::class => AuthorizationHandler::class,
-        AuthorizationException::class => AuthorizationHandler::class,
         ValidationException::class => ValidationHandler::class,
         BadRequestHttpException::class => BadRequestHttpHandler::class,
-        NotFoundHttpException::class => NotFoundHttpHandler::class,
         'Laravel\Passport\Exceptions\MissingScopeException' => MissingScopeHandler::class,
         'League\OAuth2\Server\Exception\OAuthServerException' => OAuthServerHandler::class,
     ];
@@ -67,7 +65,7 @@ abstract class AbstractHandler
      *
      * @todo Change the return type to any interface to make more extensible.
      *
-     * @return \SMartins\Exceptions\JsonApi\Error|\Smartins\Exceptions\JsonApi\ErrorCollection
+     * @return \SMartins\Exceptions\Response\ErrorHandledInterface|\Smartins\Exceptions\Response\ErrorHandledCollectionInterface
      */
     abstract public function handle();
 
@@ -79,9 +77,8 @@ abstract class AbstractHandler
      */
     public function getCode($type = 'default')
     {
-        $code = $this->exception->getCode();
-        if (empty($this->exception->getCode())) {
-            $code = config('json-exception-handler.codes.'.$type);
+        if (empty($code = $this->exception->getCode())) {
+            return config('json-exception-handler.codes.'.$type);
         }
 
         return $code;
@@ -90,7 +87,7 @@ abstract class AbstractHandler
     /**
      * Return response with handled exception.
      *
-     * @return \SMartins\Exceptions\JsonApi\Response
+     * @return \SMartins\Exceptions\Response\AbstractResponse
      */
     public function handleException()
     {
@@ -98,26 +95,28 @@ abstract class AbstractHandler
 
         $errors = $this->validatedHandledException($handler->handle());
 
-        return new Response($errors);
+        $responseHandler = $this->getResponseHandler();
+
+        return new $responseHandler($errors);
     }
 
     /**
      * Validate response from handle method of handler class.
      *
-     * @param \SMartins\Exceptions\JsonApi\Error|\Smartins\Exceptions\JsonApi\ErrorCollection $errors
-     * @return \SMartins\Exceptions\JsonApi\ErrorCollection
+     * @param \SMartins\Exceptions\Response\ErrorHandledInterface|\Smartins\Exceptions\Response\ErrorHandledCollectionInterface
+     * @return \SMartins\Exceptions\Response\ErrorHandledCollectionInterface
      *
      * @throws \InvalidArgumentException
      */
-    public function validatedHandledException($errors)
+    public function validatedHandledException($error)
     {
-        if ($errors instanceof ErrorCollection) {
-            return $errors->validated();
-        } elseif ($errors instanceof Error) {
-            return (new ErrorCollection([$errors]))->setStatusCode($errors->getStatus());
+        if ($error instanceof ErrorHandledCollectionInterface) {
+            return $error->validatedContent(ErrorHandledInterface::class);
+        } elseif ($error instanceof ErrorHandledInterface) {
+            return $error->toCollection()->setStatusCode($error->getStatus());
         }
 
-        throw new InvalidArgumentException('The errors must be an instance of ['.Error::class.'] or ['.ErrorCollection::class.'].');
+        throw new InvalidArgumentException('The errors must be an instance of ['.ErrorHandledInterface::class.'] or ['.ErrorHandledCollectionInterface::class.'].');
     }
 
     /**
@@ -127,13 +126,23 @@ abstract class AbstractHandler
      */
     public function getExceptionHandler()
     {
-        $handlers = array_merge($this->exceptionHandlers, $this->internalExceptionHandlers);
+        $handlers = $this->getConfiguredHandlers();
 
         $handler = isset($handlers[get_class($this->exception)])
             ? $handlers[get_class($this->exception)]
-            : $this->defaultHandler();
+            : $this->getDefaultHandler();
 
         return new $handler($this->exception);
+    }
+
+    /**
+     * Get exception handlers from internal and set on App\Exceptions\Handler.php
+     *
+     * @return array
+     */
+    public function getConfiguredHandlers()
+    {
+        return array_merge($this->exceptionHandlers, $this->internalExceptionHandlers);
     }
 
     /**
@@ -176,8 +185,45 @@ abstract class AbstractHandler
      *
      * @return \SMartins\Exceptions\Handlers\Handler
      */
-    public function defaultHandler()
+    public function getDefaultHandler()
     {
         return new Handler($this->exception);
+    }
+
+    /**
+     * Get default response handler of the if any response handler was defined
+     * on config file.
+     *
+     * @return string
+     */
+    public function getDefaultResponseHandler()
+    {
+        return JsonApiResponse::class;
+    }
+
+    /**
+     * Get the response class that will handle the json response.
+     *
+     * @todo Check if the response_handler on config is an instance of
+     *       \SMartins\Exceptions\Response\AbstractResponse
+     * @return string
+     */
+    public function getResponseHandler()
+    {
+        $response = config('json-exception-handler.response_handler');
+
+        return $response ?? $this->getDefaultResponseHandler();
+    }
+
+    /**
+     * Set exception handlers.
+     *
+     * @param array $handlers
+     */
+    public function setExceptionHandlers(array $handlers)
+    {
+        $this->exceptionHandlers = $handlers;
+
+        return $this;
     }
 }
