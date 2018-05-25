@@ -16,17 +16,17 @@ Default error response:
 
 ```json
 {
-    "errors": [
-        {
-            "status": 404,
-            "code": 15,
-            "source": {
-                "pointer": ""
-            },
-            "title": "Route not found.",
-            "detail": "NotFoundHttpException line 179 in RouteCollection.php"
-        }
-    ]
+  "errors": [
+    {
+      "status": "404",
+      "code": "13",
+      "title": "model_not_found_exception",
+      "detail": "User not found",
+      "source": {
+        "pointer": "data/id"
+      }
+    }
+  ]
 }
 ```
 
@@ -34,35 +34,26 @@ To `Illuminate\Validation\ValidationException`:
 
 ```json
 {
-    "errors": [
-        {
-            "status": 422,
-            "code": 1411,
-            "source": {
-                "parameter": "name"
-            },
-            "title": "Required validation failed on field name",
-            "detail": "The name field is required."
-        },
-        {
-            "status": 422,
-            "code": 1433,
-            "source": {
-                "parameter": "password"
-            },
-            "title": "Min validation failed on field password",
-            "detail": "The password must be at least 6 characters."
-        },
-        {
-            "status": 422,
-            "code": 1432,
-            "source": {
-                "parameter": "password"
-            },
-            "title": "Confirmed validation failed on field password",
-            "detail": "The password confirmation does not match."
-        }
-    ]
+  "errors": [
+    {
+      "status": "422",
+      "code": "1411",
+      "title": "Required validation failed on field name",
+      "detail": "The name field is required.",
+      "source": {
+        "pointer": "name"
+      }
+    },
+    {
+      "status": "422",
+      "code": "1421",
+      "title": "Email validation failed on field email",
+      "detail": "The email must be a valid email address.",
+      "source": {
+        "pointer": "email"
+      }
+    }
+  ]
 }
 ```
 
@@ -76,8 +67,6 @@ To `Illuminate\Validation\ValidationException`:
 - `League\OAuth2\Server\Exception\OAuthServerException`
 - `Symfony\Component\HttpKernel\Exception\NotFoundHttpException`
 - `Symfony\Component\HttpKernel\Exception\BadRequestHttpException`
-- `GuzzleHttp\Exception\ClientException`
-- `Cielo\API30\Ecommerce\Request\CieloRequestException`
 
 ## Installing and configuring
 
@@ -92,7 +81,7 @@ If you are not using **Laravel 5.5** version add the `JsonHandlerServiceProvider
 ```php
     'providers' => [
         ...
-        SMartins\JsonHandler\JsonHandlerServiceProvider::class,
+        SMartins\Exceptions\JsonHandlerServiceProvider::class,
     ],
 ```
 
@@ -125,13 +114,13 @@ passing the `$exception` if `$request` expects a json response on `render()`meth
 
 ```php
 
-use SMartins\JsonHandler\JsonHandler;
+use SMartins\Exceptions\JsonHandler;
 
 class Handler extends ExceptionHandler
 {
     use JsonHandler;
 
-    ...
+    // ...
 
     public function render($request, Exception $exception)
     {   
@@ -142,7 +131,7 @@ class Handler extends ExceptionHandler
         return parent::render($request, $exception);
     }
     
-    ...
+    // ...
 ```
 
 ### Use sample
@@ -151,12 +140,12 @@ class Handler extends ExceptionHandler
 
 class UserController extends Controller
 {
-    ...
+    // ...
 
     public function store(Request $request)
     {
         // Validation
-        $request->validate($this->rules); // on Laravel 5.5
+        $request->validate($this->rules);
 
         // or
         $this->validate($request, $this->rules);
@@ -185,6 +174,69 @@ class UserController extends Controller
         $this->authorize('users.view', $user->id);
     }
 
+```
+
+## Extending
+
+You can too create your own handler to any Exception. E.g.:
+
+- Create a Handler class that extends of `AbstractHandler`:
+
+```php
+use SMartins\Exceptions\Handlers\AbstractHandler;
+
+class MyExceptionHandler extends AbstractHandler
+{
+
+}
+```
+
+- You must implements the method `handle()` from `AbstractHandler` class. The method must return an instance of `Error` or `ErrorCollection`:
+
+```php
+use SMartins\Exceptions\JsonAPI\Error;
+use SMartins\Exceptions\JsonAPI\Source;
+use SMartins\Exceptions\Handlers\AbstractHandler;
+
+class MyExceptionHandler extends AbstractHandler
+{
+    public function handle()
+    {
+        return (new Error)->setStatus(401)
+            ->setCode($this->getCode())
+            ->setSource((new Source())->setPointer($this->getDefaultPointer()))
+            ->setTitle($this->getDefaultTitle())
+            ->setDetail($this->exception->getMessage()));
+    }
+}
+```
+
+```php
+use SMartins\Exceptions\JsonAPI\Error;
+use SMartins\Exceptions\JsonAPI\Source;
+use SMartins\Exceptions\JsonAPI\ErrorCollection;
+use SMartins\Exceptions\Handlers\AbstractHandler;
+
+class MyExceptionHandler extends AbstractHandler
+{
+    public function handle()
+    {
+        $errors = (new ErrorCollection)->setStatusCode(400);
+
+        $exceptions = $this->getExceptions();
+
+        foreach ($exceptions as $exception) {
+            $error = (new Error)->setStatus(422)
+                ->setSource((new Source())->setPointer($field))
+                ->setTitle($this->getDefaultTitle())
+                ->setDetail($exception->getMessage());
+
+            $errors->push($error);
+        }
+
+        return $errors;
+    }
+}
 ```
 
 ## Response References:

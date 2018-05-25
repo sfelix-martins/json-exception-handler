@@ -63,7 +63,7 @@ class Error implements Arrayable, ErrorHandledInterface
     /**
      * Get a unique identifier for this particular occurrence of the problem.
      *
-     * @return  string
+     * @return string
      */
     public function getId()
     {
@@ -73,11 +73,11 @@ class Error implements Arrayable, ErrorHandledInterface
     /**
      * Set a unique identifier for this particular occurrence of the problem.
      *
-     * @param  string  $id
+     * @param string $id
      *
-     * @return  self
+     * @return self
      */
-    public function setId(string $id)
+    public function setId(string $id): self
     {
         $this->id = $id;
 
@@ -87,7 +87,7 @@ class Error implements Arrayable, ErrorHandledInterface
     /**
      * Get the value of links
      *
-     * @return  \SMartins\Exceptions\JsonApi\Links
+     * @return \SMartins\Exceptions\JsonApi\Links
      */
     public function getLinks()
     {
@@ -97,11 +97,11 @@ class Error implements Arrayable, ErrorHandledInterface
     /**
      * Set the value of links
      *
-     * @param  \SMartins\Exceptions\JsonApi\Links  $links
+     * @param \SMartins\Exceptions\JsonApi\Links  $links
      *
-     * @return  self
+     * @return self
      */
-    public function setLinks(Links $links)
+    public function setLinks(Links $links): self
     {
         $this->links = $links;
 
@@ -119,11 +119,11 @@ class Error implements Arrayable, ErrorHandledInterface
     /**
      * Set the HTTP status code applicable to this problem, expressed as a string value.
      *
-     * @param  string  $status
+     * @param string $status
      *
-     * @return  self
+     * @return self
      */
-    public function setStatus(string $status)
+    public function setStatus(string $status): self
     {
         $this->status = $status;
 
@@ -133,7 +133,7 @@ class Error implements Arrayable, ErrorHandledInterface
     /**
      * Get an application-specific error code, expressed as a string value.
      *
-     * @return  string
+     * @return string
      */
     public function getCode()
     {
@@ -143,11 +143,11 @@ class Error implements Arrayable, ErrorHandledInterface
     /**
      * Set an application-specific error code, expressed as a string value.
      *
-     * @param  string  $code
+     * @param string $code
      *
-     * @return  self
+     * @return self
      */
-    public function setCode(string $code)
+    public function setCode(string $code): self
     {
         $this->code = $code;
 
@@ -157,9 +157,9 @@ class Error implements Arrayable, ErrorHandledInterface
     /**
      * Get occurrence to occurrence of the problem, except for purposes of localization.
      *
-     * @return  string
+     * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -167,11 +167,11 @@ class Error implements Arrayable, ErrorHandledInterface
     /**
      * Set occurrence to occurrence of the problem, except for purposes of localization.
      *
-     * @param  string  $title
+     * @param string $title
      *
-     * @return  self
+     * @return self
      */
-    public function setTitle(string $title)
+    public function setTitle(string $title): self
     {
         $this->title = $title;
 
@@ -181,7 +181,7 @@ class Error implements Arrayable, ErrorHandledInterface
     /**
      * Get like title, this field’s value can be localized.
      *
-     * @return  string
+     * @return string
      */
     public function getDetail()
     {
@@ -191,11 +191,11 @@ class Error implements Arrayable, ErrorHandledInterface
     /**
      * Set like title, this field’s value can be localized.
      *
-     * @param  string  $detail
+     * @param string $detail
      *
-     * @return  self
+     * @return self
      */
-    public function setDetail(string $detail)
+    public function setDetail(string $detail): self
     {
         $this->detail = $detail;
 
@@ -205,7 +205,7 @@ class Error implements Arrayable, ErrorHandledInterface
     /**
      * Get an object containing references to the source of the error.
      *
-     * @return  \SMartins\Exceptions\JsonApi\Source
+     * @return \SMartins\Exceptions\JsonApi\Source
      */
     public function getSource()
     {
@@ -215,11 +215,11 @@ class Error implements Arrayable, ErrorHandledInterface
     /**
      * Set an object containing references to the source of the error.
      *
-     * @param  \SMartins\Exceptions\JsonApi\Source  $source
+     * @param \SMartins\Exceptions\JsonApi\Source  $source
      *
-     * @return  self
+     * @return self
      */
-    public function setSource(Source $source)
+    public function setSource(Source $source): self
     {
         $this->source = $source;
 
