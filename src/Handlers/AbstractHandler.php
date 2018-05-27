@@ -4,16 +4,13 @@ namespace SMartins\Exceptions\Handlers;
 
 use Exception;
 use InvalidArgumentException;
-use Illuminate\Support\Collection;
 use SMartins\Exceptions\JsonApi\Error;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Auth\Access\AuthorizationException;
 use SMartins\Exceptions\Response\ErrorHandledInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use SMartins\Exceptions\JsonApi\Response as JsonApiResponse;
 use SMartins\Exceptions\Response\ErrorHandledCollectionInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 abstract class AbstractHandler
@@ -136,7 +133,7 @@ abstract class AbstractHandler
     }
 
     /**
-     * Get exception handlers from internal and set on App\Exceptions\Handler.php
+     * Get exception handlers from internal and set on App\Exceptions\Handler.php.
      *
      * @return array
      */

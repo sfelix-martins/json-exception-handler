@@ -24,7 +24,6 @@ abstract class AbstractResponse
      * Create new Response response passing the errors.
      *
      * @param \SMartins\Exceptions\Response\ErrorHandledCollectionInterface $errors
-     *
      */
     public function __construct(ErrorHandledCollectionInterface $errors)
     {

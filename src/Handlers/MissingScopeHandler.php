@@ -8,7 +8,7 @@ use SMartins\Exceptions\JsonApi\Source;
 class MissingScopeHandler extends AbstractHandler
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function handle()
     {

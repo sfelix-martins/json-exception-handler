@@ -9,7 +9,7 @@ use SMartins\Exceptions\JsonApi\ErrorCollection;
 class ValidationHandler extends AbstractHandler
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function handle()
     {
