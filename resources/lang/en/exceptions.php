@@ -36,5 +36,5 @@ return [
     */
     'models' => [
         'User' => 'User',
-    ]
+    ],
 ];

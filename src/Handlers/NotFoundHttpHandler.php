@@ -8,7 +8,7 @@ use SMartins\Exceptions\JsonApi\Source;
 class NotFoundHttpHandler extends AbstractHandler
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function handle()
     {

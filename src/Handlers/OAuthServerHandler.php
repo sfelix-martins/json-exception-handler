@@ -19,7 +19,7 @@ class OAuthServerHandler extends AbstractHandler
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function handle()
     {

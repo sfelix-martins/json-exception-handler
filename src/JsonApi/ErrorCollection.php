@@ -3,7 +3,6 @@
 namespace SMartins\Exceptions\JsonApi;
 
 use Illuminate\Support\Collection;
-use SMartins\Exceptions\Response\ErrorHandledInterface;
 use SMartins\Exceptions\Response\InvalidContentException;
 use SMartins\Exceptions\Response\ErrorHandledCollectionInterface;
 
@@ -72,7 +71,7 @@ class ErrorCollection extends Collection implements ErrorHandledCollectionInterf
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function validatedContent(string $type): ErrorHandledCollectionInterface
     {
