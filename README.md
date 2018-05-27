@@ -137,7 +137,6 @@ class Handler extends ExceptionHandler
 ### Use sample
 
 ```php
-
 class UserController extends Controller
 {
     // ...
@@ -183,51 +182,80 @@ You can too create your own handler to any Exception. E.g.:
 - Create a Handler class that extends of `AbstractHandler`:
 
 ```php
+namespace App\Exceptions;
+
+use GuzzleHttp\Exception\ClientException;
 use SMartins\Exceptions\Handlers\AbstractHandler;
 
-class MyExceptionHandler extends AbstractHandler
+class GuzzleClientHandler extends AbstractHandler
 {
-
+    /**
+     * Create instance using the Exception to be handled.
+     *
+     * @param \GuzzleHttp\Exception\ClientException $e
+     */
+    public function __construct(ClientException $e)
+    {
+        parent::__construct($e);
+    }
 }
 ```
 
 - You must implements the method `handle()` from `AbstractHandler` class. The method must return an instance of `Error` or `ErrorCollection`:
 
 ```php
+namespace App\Exceptions;
+
 use SMartins\Exceptions\JsonAPI\Error;
 use SMartins\Exceptions\JsonAPI\Source;
+use GuzzleHttp\Exception\ClientException;
 use SMartins\Exceptions\Handlers\AbstractHandler;
 
-class MyExceptionHandler extends AbstractHandler
+class GuzzleClientHandler extends AbstractHandler
 {
+    // ...
+
     public function handle()
     {
-        return (new Error)->setStatus(401)
+        return (new Error)->setStatus($this->getStatusCode())
             ->setCode($this->getCode())
             ->setSource((new Source())->setPointer($this->getDefaultPointer()))
             ->setTitle($this->getDefaultTitle())
-            ->setDetail($this->exception->getMessage()));
+            ->setDetail($this->exception->getMessage());
+    }
+
+    public function getCode()
+    {
+        // You can add a new type of code on `config/json-exception-handlers.php`
+        return config('json-exception-handler.codes.client.default');
     }
 }
 ```
 
 ```php
+namespace App\Exceptions;
+
 use SMartins\Exceptions\JsonAPI\Error;
 use SMartins\Exceptions\JsonAPI\Source;
 use SMartins\Exceptions\JsonAPI\ErrorCollection;
 use SMartins\Exceptions\Handlers\AbstractHandler;
 
-class MyExceptionHandler extends AbstractHandler
+class MyCustomizedHandler extends AbstractHandler
 {
+    public function __construct(MyCustomizedException $e)
+    {
+        parent::__construct($e);
+    }
+
     public function handle()
     {
         $errors = (new ErrorCollection)->setStatusCode(400);
 
-        $exceptions = $this->getExceptions();
+        $exceptions = $this->exception->getExceptions();
 
         foreach ($exceptions as $exception) {
             $error = (new Error)->setStatus(422)
-                ->setSource((new Source())->setPointer($field))
+                ->setSource((new Source())->setPointer($this->getDefaultPointer()))
                 ->setTitle($this->getDefaultTitle())
                 ->setDetail($exception->getMessage());
 
