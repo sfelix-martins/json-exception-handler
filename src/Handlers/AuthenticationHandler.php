@@ -8,7 +8,7 @@ use SMartins\Exceptions\JsonApi\Source;
 class AuthenticationHandler extends AbstractHandler
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function handle()
     {

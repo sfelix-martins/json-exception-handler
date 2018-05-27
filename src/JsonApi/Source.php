@@ -25,7 +25,6 @@ class Source implements Arrayable
      */
     protected $parameter;
 
-
     /**
      * Get pointer.
      *

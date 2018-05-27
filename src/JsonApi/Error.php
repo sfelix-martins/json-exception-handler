@@ -85,7 +85,7 @@ class Error implements Arrayable, ErrorHandledInterface
     }
 
     /**
-     * Get the value of links
+     * Get the value of links.
      *
      * @return \SMartins\Exceptions\JsonApi\Links
      */
@@ -95,7 +95,7 @@ class Error implements Arrayable, ErrorHandledInterface
     }
 
     /**
-     * Set the value of links
+     * Set the value of links.
      *
      * @param \SMartins\Exceptions\JsonApi\Links  $links
      *
@@ -109,7 +109,7 @@ class Error implements Arrayable, ErrorHandledInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getStatus(): string
     {
@@ -227,7 +227,7 @@ class Error implements Arrayable, ErrorHandledInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function toCollection(): ErrorHandledCollectionInterface
     {

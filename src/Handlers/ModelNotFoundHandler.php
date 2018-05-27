@@ -19,7 +19,7 @@ class ModelNotFoundHandler extends AbstractHandler
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function handle()
     {
