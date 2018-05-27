@@ -16,14 +16,14 @@ abstract class AbstractResponse
     /**
      * The errors on response.
      *
-     * @var \SMartins\Exceptions\JsonApi\ErrorCollection
+     * @var \SMartins\Exceptions\Response\ErrorHandledCollectionInterface
      */
     protected $errors;
 
     /**
-     * Create new JsonApi response passing the errors.
+     * Create new Response response passing the errors.
      *
-     * @param \SMartins\Exceptions\JsonApi\ErrorCollection $errors
+     * @param \SMartins\Exceptions\Response\ErrorHandledCollectionInterface $errors
      *
      */
     public function __construct(ErrorHandledCollectionInterface $errors)
@@ -60,7 +60,7 @@ abstract class AbstractResponse
     /**
      * Get the errors on response.
      *
-     * @return \SMartins\Exceptions\JsonApi\ErrorCollection
+     * @return \SMartins\Exceptions\Response\ErrorHandledCollectionInterface
      */
     public function getErrors()
     {

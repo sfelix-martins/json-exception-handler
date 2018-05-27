@@ -26,7 +26,7 @@ class ErrorCollection extends Collection implements ErrorHandledCollectionInterf
     /**
      * Returns the status code.
      *
-     * @return string
+     * @return string|null
      */
     public function getStatusCode()
     {
@@ -38,7 +38,7 @@ class ErrorCollection extends Collection implements ErrorHandledCollectionInterf
      *
      * @return array headers
      */
-    public function getHeaders()
+    public function getHeaders(): array
     {
         return $this->headers;
     }
@@ -61,9 +61,10 @@ class ErrorCollection extends Collection implements ErrorHandledCollectionInterf
      * Set the headers of response.
      *
      * @param array $headers
+     *
      * @return self
      */
-    public function setHeaders(array $headers)
+    public function setHeaders(array $headers): self
     {
         $this->headers = $headers;
 
