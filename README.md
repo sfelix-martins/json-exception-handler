@@ -6,6 +6,11 @@
 Adds methods to your `App\Exceptions\Handler` to treat json responses.
 It is most useful if you are building APIs!
 
+## Requirements
+
+* Laravel Framework >= 5.4
+* php >= 7.0
+
 ## JsonAPI
 
 Using [JsonAPI](http://jsonapi.org) standard to  responses!
