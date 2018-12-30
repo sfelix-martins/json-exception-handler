@@ -2,12 +2,17 @@
 
 namespace SMartins\Exceptions\Handlers;
 
-use SMartins\Exceptions\JSONAPI\Error;
-use SMartins\Exceptions\JSONAPI\Source;
+use SMartins\Exceptions\JsonApi\Error;
+use SMartins\Exceptions\JsonApi\Source;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ModelNotFoundHandler extends AbstractHandler
 {
+    /**
+     * @var ModelNotFoundException
+     */
+    protected $exception;
+
     /**
      * Create instance using the Exception to be handled.
      *
@@ -40,7 +45,7 @@ class ModelNotFoundHandler extends AbstractHandler
      * @param  string $model
      * @return string
      */
-    public function extractEntityName($model)
+    public function extractEntityName(string $model)
     {
         $classNames = (array) explode('\\', $model);
 

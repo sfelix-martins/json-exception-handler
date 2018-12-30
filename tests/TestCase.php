@@ -2,8 +2,10 @@
 
 namespace SMartins\Exceptions\Tests;
 
-use SMartins\Exceptions\JsonHandlerServiceProvider;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Orchestra\Testbench\TestCase as BaseTestCase;
+use SMartins\Exceptions\JsonHandlerServiceProvider;
+use SMartins\Exceptions\Tests\Fixtures\Exceptions\Handler;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -16,8 +18,8 @@ abstract class TestCase extends BaseTestCase
     protected function getEnvironmentSetUp($app)
     {
         $app->singleton(
-            \Illuminate\Contracts\Debug\ExceptionHandler::class,
-            \SMartins\Exceptions\Tests\Fixtures\Exceptions\Handler::class
+            ExceptionHandler::class,
+            Handler::class
         );
 
         // Setup default database to use sqlite :memory:
