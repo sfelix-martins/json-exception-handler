@@ -26,6 +26,10 @@ matrix:
       env:
         - testbench=3.6.x
         - phpunit=7.0.x
+    - php: 7.1
+      env:
+        - testbench=3.7.x
+        - phpunit=7.0.x
     - php: 7.2
       env:
         - testbench=3.5.x
@@ -37,6 +41,10 @@ matrix:
     - php: 7.2
       env:
         - testbench=3.6.x
+        - phpunit=7.0.x
+    - php: 7.2
+      env:
+        - testbench=3.7.x
         - phpunit=7.0.x
 
 sudo: false
