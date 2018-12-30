@@ -7,6 +7,9 @@ use InvalidArgumentException;
 
 trait GettersAndSetters
 {
+    /**
+     * @throws \ReflectionException
+     */
     public function testGettersAndSetters()
     {
         if (! property_exists($this, 'classToTest')) {

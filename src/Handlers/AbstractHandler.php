@@ -4,7 +4,6 @@ namespace SMartins\Exceptions\Handlers;
 
 use Exception;
 use InvalidArgumentException;
-use SMartins\Exceptions\JsonApi\Error;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use SMartins\Exceptions\Response\ErrorHandledInterface;
@@ -60,9 +59,7 @@ abstract class AbstractHandler
      * Handle with an exception according to specific definitions. Returns one
      * or more errors using the exception from $exceptions attribute.
      *
-     * @todo Change the return type to any interface to make more extensible.
-     *
-     * @return \SMartins\Exceptions\Response\ErrorHandledInterface|\Smartins\Exceptions\Response\ErrorHandledCollectionInterface
+     * @return ErrorHandledInterface|ErrorHandledCollectionInterface
      */
     abstract public function handle();
 
@@ -85,6 +82,7 @@ abstract class AbstractHandler
      * Return response with handled exception.
      *
      * @return \SMartins\Exceptions\Response\AbstractResponse
+     * @throws \SMartins\Exceptions\Response\InvalidContentException
      */
     public function handleException()
     {
@@ -100,10 +98,10 @@ abstract class AbstractHandler
     /**
      * Validate response from handle method of handler class.
      *
-     * @param \SMartins\Exceptions\Response\ErrorHandledInterface|\Smartins\Exceptions\Response\ErrorHandledCollectionInterface
-     * @return \SMartins\Exceptions\Response\ErrorHandledCollectionInterface
+     * @param ErrorHandledInterface|ErrorHandledCollectionInterface
+     * @return ErrorHandledCollectionInterface
      *
-     * @throws \InvalidArgumentException
+     * @throws \SMartins\Exceptions\Response\InvalidContentException
      */
     public function validatedHandledException($error)
     {
@@ -216,6 +214,7 @@ abstract class AbstractHandler
      * Set exception handlers.
      *
      * @param array $handlers
+     * @return AbstractHandler
      */
     public function setExceptionHandlers(array $handlers)
     {

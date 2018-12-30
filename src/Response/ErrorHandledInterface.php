@@ -9,7 +9,7 @@ interface ErrorHandledInterface
      *
      * @todo Maybe pass this method to another interface.
      *
-     * @return \SMartin\Exceptions\Response\ErrorHandledCollectionInterface
+     * @return \SMartins\Exceptions\Response\ErrorHandledCollectionInterface
      */
     public function toCollection(): ErrorHandledCollectionInterface;
 

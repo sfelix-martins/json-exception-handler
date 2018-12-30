@@ -18,7 +18,7 @@ interface ErrorCollectionInterface extends Arrayable
      *
      * @param string $statusCode
      *
-     * @return self
+     * @return static
      */
     public function setStatusCode(string $statusCode);
 
