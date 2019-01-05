@@ -272,6 +272,27 @@ class MyCustomizedHandler extends AbstractHandler
 }
 ```
 
+- Now just registry your customized handler on `App\Exception\Handler` file on attribute `exceptionHandlers`. E.g:
+
+```php
+namespace App\Exceptions;
+
+use Exception;
+use GuzzleHttp\Exception\ClientException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use SMartins\Exceptions\JsonHandler;
+
+class Handler extends ExceptionHandler
+{
+    use JsonHandler;
+
+    protected $exceptionHandlers = [
+        // Set on key the exception and on value the handler.
+        ClientException::class => GuzzleClientHandler::class,
+    ];
+
+```
+
 ## Response References:
 
 - http://jsonapi.org/format/#errors
