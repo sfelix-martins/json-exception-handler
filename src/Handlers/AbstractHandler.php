@@ -137,7 +137,7 @@ abstract class AbstractHandler
      */
     public function getConfiguredHandlers()
     {
-        return array_merge($this->exceptionHandlers, $this->internalExceptionHandlers);
+        return array_merge($this->internalExceptionHandlers, $this->exceptionHandlers);
     }
 
     /**

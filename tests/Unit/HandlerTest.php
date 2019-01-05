@@ -3,7 +3,7 @@
 namespace SMartins\Exceptions\Tests\Unit;
 
 use Exception;
-use SMartins\Exceptions\JSONAPI\Error;
+use SMartins\Exceptions\JsonApi\Error;
 use SMartins\Exceptions\Tests\TestCase;
 use SMartins\Exceptions\Handlers\Handler;
 
