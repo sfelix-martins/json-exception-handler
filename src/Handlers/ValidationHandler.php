@@ -13,7 +13,7 @@ class ValidationHandler extends AbstractHandler
      */
     public function handle()
     {
-        $errors = (new ErrorCollection)->setStatusCode(400);
+        $errors = (new ErrorCollection)->setStatusCode(422);
 
         $failedFieldsRules = $this->getFailedFieldsRules();
 
@@ -49,7 +49,7 @@ class ValidationHandler extends AbstractHandler
     public function getValidationTitle(array $failedFieldsRules, string $key, string $field)
     {
         $title = __('exception::exceptions.validation.title', [
-            'fails' => array_keys($failedFieldsRules[$field])[$key],
+            'fails' => strtolower(array_keys($failedFieldsRules[$field])[$key]),
             'field' => $field,
         ]);
 
