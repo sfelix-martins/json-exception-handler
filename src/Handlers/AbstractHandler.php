@@ -147,7 +147,7 @@ abstract class AbstractHandler
      */
     public function getDefaultPointer()
     {
-        return $this->exception->getFile().':'.$this->exception->getLine();
+        return '';
     }
 
     /**

@@ -85,7 +85,7 @@ class JsonHandlerTest extends TestCase
         $params = ['email' => str_repeat('a', 11)];
 
         $this->json('GET', 'validation', $params)
-            ->assertStatus(400)
+            ->assertStatus(422)
             ->assertJsonStructure($this->defaultErrorStructure());
     }
 
