@@ -1,7 +1,8 @@
 # Laravel Json Exception Handler
 
 [![StyleCI](https://styleci.io/repos/101529653/shield?style=plastic&branch=2.0)](https://styleci.io/repos/101529653?style=plastic&branch=2.0)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sfelix-martins/json-exception-handler/badges/quality-score.png?b=2.0)](https://scrutinizer-ci.com/g/sfelix-martins/json-exception-handler/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sfelix-martins/json-exception-handler/badges/quality-score.png?b=2.0)](https://scrutinizer-ci.com/g/sfelix-martins/json-exception-handler/?branch=2.0)
+[![Build Status](https://travis-ci.org/sfelix-martins/json-exception-handler.svg?branch=2.0)](https://travis-ci.org/sfelix-martins/json-exception-handler)
 
 Adds methods to your `App\Exceptions\Handler` to treat json responses.
 It is most useful if you are building APIs!
