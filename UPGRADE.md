@@ -4,7 +4,7 @@
 
 ### Updating Dependencies
 
-Update the `sfelix-martins/passport-multiauth` dependency to `^2.0` in your `composer.json` file.
+Update the `sfelix-martins/json-exception-handler` dependency to `^2.0` in your `composer.json` file.
 
 ### Update Configs
 
