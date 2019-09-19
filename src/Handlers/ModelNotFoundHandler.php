@@ -2,6 +2,7 @@
 
 namespace SMartins\Exceptions\Handlers;
 
+use Illuminate\Support\Str;
 use SMartins\Exceptions\JsonApi\Error;
 use SMartins\Exceptions\JsonApi\Source;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -35,7 +36,7 @@ class ModelNotFoundHandler extends AbstractHandler
         return (new Error)->setStatus(404)
             ->setCode($this->getCode('model_not_found'))
             ->setSource((new Source())->setPointer('data/id'))
-            ->setTitle(snake_case(class_basename($this->exception)))
+            ->setTitle(Str::snake(class_basename($this->exception)))
             ->setDetail($detail);
     }
 

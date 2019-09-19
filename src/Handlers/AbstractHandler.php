@@ -3,6 +3,7 @@
 namespace SMartins\Exceptions\Handlers;
 
 use Exception;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
@@ -157,7 +158,7 @@ abstract class AbstractHandler
      */
     public function getDefaultTitle()
     {
-        return snake_case(class_basename($this->exception));
+        return Str::snake(class_basename($this->exception));
     }
 
     /**
