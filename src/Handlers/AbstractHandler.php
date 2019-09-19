@@ -3,6 +3,7 @@
 namespace SMartins\Exceptions\Handlers;
 
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Illuminate\Auth\AuthenticationException;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use SMartins\Exceptions\JsonApi\Response as JsonApiResponse;
 use SMartins\Exceptions\Response\ErrorHandledCollectionInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class AbstractHandler
 {
@@ -42,6 +44,8 @@ abstract class AbstractHandler
         AuthenticationException::class => AuthenticationHandler::class,
         ValidationException::class => ValidationHandler::class,
         BadRequestHttpException::class => BadRequestHttpHandler::class,
+        AuthorizationException::class => AuthorizationHandler::class,
+        NotFoundHttpException::class => NotFoundHttpHandler::class,
         'Laravel\Passport\Exceptions\MissingScopeException' => MissingScopeHandler::class,
         'League\OAuth2\Server\Exception\OAuthServerException' => OAuthServerHandler::class,
     ];
