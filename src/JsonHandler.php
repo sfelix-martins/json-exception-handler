@@ -2,8 +2,8 @@
 
 namespace SMartins\Exceptions;
 
-use Exception;
 use SMartins\Exceptions\Handlers\Handler;
+use Throwable;
 
 trait JsonHandler
 {
