@@ -2,8 +2,8 @@
 
 namespace SMartins\Exceptions;
 
-use Exception;
 use SMartins\Exceptions\Handlers\Handler;
+use Throwable;
 
 trait JsonHandler
 {
@@ -11,11 +11,11 @@ trait JsonHandler
      * Handle the json response. Check if exception is treated. If true call
      * the specific handler. If false set the default response to be returned.
      *
-     * @param  \Exception $exception
+     * @param  \Throwable  $exception
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function jsonResponse(Exception $exception)
+    public function jsonResponse(Throwable $exception)
     {
         $handler = new Handler($exception);
 
