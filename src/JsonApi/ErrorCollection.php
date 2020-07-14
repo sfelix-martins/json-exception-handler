@@ -3,8 +3,8 @@
 namespace SMartins\Exceptions\JsonApi;
 
 use Illuminate\Support\Collection;
-use SMartins\Exceptions\Response\InvalidContentException;
 use SMartins\Exceptions\Response\ErrorHandledCollectionInterface;
+use SMartins\Exceptions\Response\InvalidContentException;
 
 class ErrorCollection extends Collection implements ErrorHandledCollectionInterface
 {

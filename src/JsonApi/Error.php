@@ -3,9 +3,9 @@
 namespace SMartins\Exceptions\JsonApi;
 
 use Illuminate\Contracts\Support\Arrayable;
-use SMartins\Exceptions\Traits\NotNullArrayable;
-use SMartins\Exceptions\Response\ErrorHandledInterface;
 use SMartins\Exceptions\Response\ErrorHandledCollectionInterface;
+use SMartins\Exceptions\Response\ErrorHandledInterface;
+use SMartins\Exceptions\Traits\NotNullArrayable;
 
 class Error implements Arrayable, ErrorHandledInterface
 {

@@ -3,8 +3,8 @@
 namespace SMartins\Exceptions\Handlers;
 
 use SMartins\Exceptions\JsonApi\Error;
-use SMartins\Exceptions\JsonApi\Source;
 use SMartins\Exceptions\JsonApi\ErrorCollection;
+use SMartins\Exceptions\JsonApi\Source;
 
 class ValidationHandler extends AbstractHandler
 {
