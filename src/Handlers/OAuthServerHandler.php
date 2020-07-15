@@ -2,9 +2,9 @@
 
 namespace SMartins\Exceptions\Handlers;
 
+use League\OAuth2\Server\Exception\OAuthServerException;
 use SMartins\Exceptions\JsonApi\Error;
 use SMartins\Exceptions\JsonApi\Source;
-use League\OAuth2\Server\Exception\OAuthServerException;
 
 class OAuthServerHandler extends AbstractHandler
 {

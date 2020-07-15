@@ -2,10 +2,10 @@
 
 namespace SMartins\Exceptions\Handlers;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 use SMartins\Exceptions\JsonApi\Error;
 use SMartins\Exceptions\JsonApi\Source;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ModelNotFoundHandler extends AbstractHandler
 {
