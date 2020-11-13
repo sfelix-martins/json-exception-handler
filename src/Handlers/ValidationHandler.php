@@ -48,12 +48,22 @@ class ValidationHandler extends AbstractHandler
      */
     public function getValidationTitle(array $failedFieldsRules, string $key, string $field)
     {
-        $title = __('exception::exceptions.validation.title', [
-            'fails' => strtolower(array_keys($failedFieldsRules[$field])[$key]),
-            'field' => $field,
-        ]);
+      if (empty($failedFieldsRules)) {
+        $fails = '';
+      } else {
+        $fails = strtolower(array_keys($failedFieldsRules[$field])[$key]);
+      }
 
-        return is_array($title) ? $title[0] : $title;
+      $title = __('exception::exceptions.validation.title', [
+        'fails' => $fails,
+        'field' => $field,
+      ]);
+
+      if (is_array($title)) {
+        $title = $title[0];
+      }
+
+      return ucfirst(trim($title));
     }
 
     /**
@@ -66,9 +76,12 @@ class ValidationHandler extends AbstractHandler
      */
     public function getValidationCode(array $failedFieldsRules, string $key, string $field)
     {
-        $rule = strtolower(array_keys($failedFieldsRules[$field])[$key]);
+      if (empty($failedFieldsRules)) {
+        return config('json-exception-handler.codes.validation');
+      }
 
-        return config('json-exception-handler.codes.validation_fields.'.$field.'.'.$rule);
+      $rule = strtolower(array_keys($failedFieldsRules[$field])[$key]);
+      return config('json-exception-handler.codes.validation_fields.' . $field . '.' . $rule);
     }
 
     /**
