@@ -2,6 +2,7 @@
 
 namespace SMartins\Exceptions\Handlers;
 
+use Throwable;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
@@ -55,7 +56,7 @@ abstract class AbstractHandler
      *
      * @param Exception $e
      */
-    public function __construct(Exception $e)
+    public function __construct(Throwable $e)
     {
         $this->exception = $e;
     }
